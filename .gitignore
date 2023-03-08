@@ -2,4 +2,5 @@ push_swap
 push_swap_visualizer
 *obj*/
 lib/
+tests/test
 .DS_Store
