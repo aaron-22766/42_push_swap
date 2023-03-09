@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/08 13:50:40 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/09 10:16:11 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ TEST		=	$(TESTDIR)/test
 SRCS		=	$(wildcard $(SRCDIR)/*.c)
 OBJS		=	$(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o)))
 TESTSRCS	=	$(wildcard $(TESTDIR)/*.c)
-TESTOBJS	=	$(addprefix $(TESTOBJDIR)/,$(notdir $(TESTSRCS:.c=.o)))
-PROJOBJS	=	$(filter-out ./obj/push_swap.o, $(OBJS))
+TESTOBJS	=	$(filter-out $(TESTOBJDIR)/push_swap.o, \
+				$(addprefix $(TESTOBJDIR)/,$(notdir $(TESTSRCS:.c=.o))) \
+				$(addprefix $(TESTOBJDIR)/,$(notdir $(SRCS:.c=.o))))
 
 # **************************************************************************** #
 #                               CHANGE WILDCARD                                #
@@ -62,11 +63,14 @@ $(OBJDIR):
 $(TESTOBJDIR)/%.o: $(TESTDIR)/%.c | $(TESTOBJDIR)
 	$(CC) -c $(CFLAGS) $< -o $@ $(CHECK_INC)
 
+$(TESTOBJDIR)/%.o: $(SRCDIR)/%.c | $(TESTOBJDIR)
+	$(CC) -c $(CFLAGS) -D ft_putstr_fd=putstr_ignored $< -o $@ $(CHECK_INC)
+
 $(TESTOBJDIR):
 	mkdir -p $(TESTOBJDIR)
 
-$(TEST): $(TESTOBJS) $(PROJOBJS) $(ARCS)
-	$(CC) -o $(TEST) $(TESTOBJS) $(PROJOBJS) $(ARCS) $(CHECK_LIB) $(CHECK_INC)
+$(TEST): $(TESTOBJS) $(ARCS)
+	$(CC) -o $(TEST) $(TESTOBJS) $(ARCS) $(CHECK_LIB) $(CHECK_INC)
 
 all: $(NAME)
 

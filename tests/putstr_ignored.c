@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   putstr_ignored.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 17:25:29 by arabenst         ###   ########.fr       */
+/*   Created: 2023/03/09 10:16:29 by arabenst          #+#    #+#             */
+/*   Updated: 2023/03/09 10:17:18 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "test.h"
 
-int	main(int argc, char **argv)
+ssize_t	putstr_ignored(char *s, int fd)
 {
-	t_push_swap	*data;
-
-	if (argc == 1)
-		exit(0);
-	data = ft_init_data();
-	ft_get_input(data, argc, argv);
-	
+	(void)s;
+	(void)fd;
+	return (0);
 }

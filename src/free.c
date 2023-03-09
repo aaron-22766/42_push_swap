@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 15:31:40 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 09:59:44 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_free_data(t_push_swap *data)
 	data = 0;
 }
 
-void	ft_exit_free(t_push_swap *data, int error)
+void	ft_exit(t_push_swap *data, int error)
 {
 	ft_free_data(data);
 	if (error)

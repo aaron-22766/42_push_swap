@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 13:50:57 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:15:46 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "../lib/libft/src/libft.h"
-
-/* ************************************************************************** */
-/*                                  DEFINES                                   */
-/* ************************************************************************** */
-
-
 
 /* ************************************************************************** */
 /*                                  STRUCTS                                   */
@@ -78,6 +72,6 @@ void		ft_rrr(t_push_swap *data);
 // free.c
 void		ft_free_split(t_push_swap *data);
 void		ft_free_data(t_push_swap *data);
-void		ft_exit_free(t_push_swap *data, int error);
+void		ft_exit(t_push_swap *data, int error);
 
 #endif
