@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:11:29 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 15:26:05 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:20:13 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int main(void)
 	Suite		*(*suites[])(void) = {
 		&input_suite,
 		&swap_suite,
-		&push_suite
+		&push_suite,
+		&rotate_suite
 	};
 	unsigned long	i;
 

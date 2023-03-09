@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:12:07 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 14:29:20 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:20:08 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ ssize_t	test_putstr_fd(char *s, int fd);
 Suite	*input_suite(void);
 Suite	*swap_suite(void);
 Suite	*push_suite(void);
+Suite	*rotate_suite(void);
 
 #endif
