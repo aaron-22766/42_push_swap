@@ -1,55 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   test_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:41:07 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 10:50:14 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:26:07 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-// static void	ft_compare_int_arrays(int* expected, int* actual, int size)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < size)
-// 		ck_assert_int_eq(expected[i], actual[i]);
-// }
-
-// static void	ft_check_input(int *expected, char *argv, int size)
-// {
-// 	char	**split;
-// 	int		i;
-
-// 	split = ft_split(argv, ',');
-// 	i = 0;
-// 	while (split[i])
-// 		i++;
-// 	ft_get_input(data, i, split);
-// 	i = 0;
-// 	while (split[i])
-// 		free(split[i++]);
-// 	free(split);
-// 	ck_assert_ptr_null(data->split);
-// 	ck_assert_ptr_nonnull(data->a);
-// 	ck_assert_ptr_nonnull(data->b);
-// 	ck_assert_ptr_nonnull(data->a->stack);
-// 	ck_assert_ptr_nonnull(data->b->stack);
-// 	ck_assert_int_eq(data->a->count, size);
-// 	ck_assert_int_eq(data->b->count, 0);
-// 	ck_assert_int_eq(data->a->top, 0);
-// 	ck_assert_int_eq(data->a->top, 0);
-// 	ft_compare_int_arrays(expected, data->a->stack, size);
-// }
-
-static void	data_setup(void)
+static void	ft_load_input(char *argv)
 {
-	data = ft_init_data();
+	char	**split;
+	int		splits;
+	int		i;
+
+	splits = ft_count_chars(argv, ',') + 1;
+	split = ft_get_split(argv, splits);
+	if (!split)
+	{
+		ft_printf("Allocation Error!\n");
+		exit(1);
+	}
+	ft_get_input(data, splits, split);
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
 }
 
 static void	data_teardown(void)
@@ -58,20 +38,164 @@ static void	data_teardown(void)
 	data = 0;
 }
 
-START_TEST(init_data)
+static void	data_setup1(void)
 {
-	ck_assert_ptr_nonnull(data);
+	char	argv[] = "./push_swap, 1, 2, 3, 4, 5, 6";
+
+	data = ft_init_data();
+	ft_load_input(argv);
+}
+
+START_TEST(swap1_1)
+{
+	int	a[] = {2, 1, 3, 4, 5, 6};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 0;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+START_TEST(swap1_2)
+{
+	int	a[] = {1, 3, 2, 4, 5, 6};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 1;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+START_TEST(swap1_3)
+{
+	int	a[] = {6, 2, 3, 4, 5, 1};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 5;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+static void	data_setup2(void)
+{
+	char	argv[] = "./push_swap, 29551, 23244, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, -5331, 1186, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 34061";
+
+	data = ft_init_data();
+	ft_load_input(argv);
+}
+
+START_TEST(swap2_1)
+{
+	int	a[] = {23244, 29551, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, -5331, 1186, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 34061};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 0;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+START_TEST(swap2_2)
+{
+	int	a[] = {29551, 23244, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, 1186, -5331, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 34061};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 10;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+START_TEST(swap2_3)
+{
+	int	a[] = {34061, 23244, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, -5331, 1186, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 29551};
+	int	b[] = {};
+	int	top_a;
+
+	top_a = 19;
+	data->a->top = top_a;
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), top_a, b, 0, 0);
+}	END_TEST
+
+static void	data_setup3(void)
+{
+	char	argv[] = "./push_swap, 123456, 789, 0";
+
+	data = ft_init_data();
+	ft_load_input(argv);
+}
+
+START_TEST(swap3_1)
+{
+	int	a[] = {0, 789};
+	int	b[] = {123456};
+
+	ft_push(data->a, data->b);
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), 0, b, sizeof(b) / sizeof(int), 0);
+}	END_TEST
+
+START_TEST(swap3_2)
+{
+	int	a[] = {0};
+	int	b[] = {789, 123456};
+
+	ft_push(data->a, data->b);
+	ft_push(data->a, data->b);
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), 0, b, sizeof(b) / sizeof(int), 0);
+}	END_TEST
+
+START_TEST(swap3_3)
+{
+	int	a[] = {};
+	int	b[] = {0, 789, 123456};
+
+	ft_push(data->a, data->b);
+	ft_push(data->a, data->b);
+	ft_push(data->a, data->b);
+	ft_swap(data->a);
+	ft_check_valid(a, sizeof(a) / sizeof(int), 0, b, sizeof(b) / sizeof(int), 0);
 }	END_TEST
 
 Suite	*swap_suite(void)
 {
 	Suite	*s;
-	TCase	*tc;
+	TCase	*tc1;
+	TCase	*tc2;
+	TCase	*tc3;
 
 	s = suite_create("Swap");
-	tc = tcase_create("Swap");
-	tcase_add_checked_fixture(tc, data_setup, data_teardown);
-	tcase_add_test(tc, init_data);
-	suite_add_tcase(s, tc);
+	
+	tc1 = tcase_create("Case 1");
+	tcase_add_checked_fixture(tc1, data_setup1, data_teardown);
+	tcase_add_test(tc1, swap1_1);
+	tcase_add_test(tc1, swap1_2);
+	tcase_add_test(tc1, swap1_3);
+	suite_add_tcase(s, tc1);
+	
+	tc2 = tcase_create("Case 2");
+	tcase_add_checked_fixture(tc2, data_setup2, data_teardown);
+	tcase_add_test(tc2, swap2_1);
+	tcase_add_test(tc2, swap2_2);
+	tcase_add_test(tc2, swap2_3);
+	suite_add_tcase(s, tc2);
+	
+	tc3 = tcase_create("Case 3");
+	tcase_add_checked_fixture(tc3, data_setup3, data_teardown);
+	tcase_add_test(tc3, swap3_1);
+	tcase_add_test(tc3, swap3_2);
+	tcase_add_test(tc3, swap3_3);
+	suite_add_tcase(s, tc3);
+	
 	return (s);
 }

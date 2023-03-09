@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:12:07 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 17:52:10 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:29:20 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ t_push_swap	*data;
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
 
-// ignore_ft_putstr_fd.c
+// helper.c
+void	ft_compare_int_arrays(int* expected, int* actual, int size);
+void	ft_check_valid(int *a, int size_a, int top_a,
+						int *b, int size_b, int top_b);
+char	**ft_get_split(char *argv, int splits);
 ssize_t	test_putstr_fd(char *s, int fd);
 
-// input.c
+// Suites
 Suite	*input_suite(void);
-
-// swap.c
 Suite	*swap_suite(void);
+Suite	*push_suite(void);
 
 #endif

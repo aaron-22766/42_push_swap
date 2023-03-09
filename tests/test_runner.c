@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   runner.c                                           :+:      :+:    :+:   */
+/*   test_runner.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:11:29 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/08 13:19:27 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:12:19 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_run_suite(Suite *s)
 
 	runner = srunner_create(s);
 	srunner_run_all(runner, CK_NORMAL);
-	srunner_ntests_failed(runner);
 	srunner_free(runner);
 	ft_printf("\n");
 }

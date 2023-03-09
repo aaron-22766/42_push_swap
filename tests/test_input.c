@@ -6,67 +6,15 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:08:56 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 11:48:05 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/09 12:27:58 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-static void	ft_compare_int_arrays(int* expected, int* actual, int size)
-{
-	int	i;
-
-	i = -1;
-	while (++i < size)
-		ck_assert_int_eq(expected[i], actual[i]);
-}
-
-static void	ft_check_valid(int *expected, int size)
-{
-	ck_assert_ptr_null(data->split);
-	ck_assert_ptr_nonnull(data->a);
-	ck_assert_ptr_nonnull(data->b);
-	ck_assert_ptr_nonnull(data->a->stack);
-	ck_assert_ptr_nonnull(data->b->stack);
-	ck_assert_int_eq(data->a->count, size);
-	ck_assert_int_eq(data->b->count, 0);
-	ck_assert_int_eq(data->a->top, 0);
-	ck_assert_int_eq(data->a->top, 0);
-	ft_compare_int_arrays(expected, data->a->stack, size);
-}
-
-char	**ft_get_split(char *argv, int splits)
-{
-	char	**result;
-	char	**split;
-	int		i;
-	int		s;
-	int		r;
-
-	result = ft_calloc(splits + 1, sizeof(char *));
-	if (!result)
-		return (NULL);
-	split = ft_split(argv, ',');
-	i = 0;
-	s = 0;
-	r = 0;
-	while (!i || argv[i - 1])
-	{
-		if (argv[i] == ',' || !argv[i])
-		{
-			if (i > 0 && argv[i - 1] != ',')
-				result[r++] = split[s++];
-			else
-				result[r++] = ft_strdup("");
-		}
-		i++;
-	}
-	free(split);
-	return (result);
-}
-
 static void	ft_check_input(int *expected, char *argv, int size)
 {
+	int		b[] = {};
 	pid_t	pid;
 	int		status;
 	char	**split;
@@ -98,7 +46,7 @@ static void	ft_check_input(int *expected, char *argv, int size)
 		free(split[i++]);
 	free(split);
 	if (expected)
-		ft_check_valid(expected, size);
+		ft_check_valid(expected, size, 0, b, 0, 0);
 }
 
 static void	data_setup(void)

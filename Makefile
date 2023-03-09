@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/09 10:16:11 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/09 11:52:39 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ re: fclean all
 reb: fclean bonus
 
 test: $(TEST)
-	./$(TEST)
+	@./$(TEST)
 
 test_clean:
 	$(RM) $(RMFLAGS) $(TESTOBJDIR) $(TEST)
