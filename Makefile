@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/09 11:52:39 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/10 11:51:55 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,9 @@ ARCS		=	$(LIBFT)
 CHECK_LIB	=	-lcheck -L $(HOME)/.brew/opt/check/lib/
 CHECK_INC	=	-I $(HOME)/.brew/opt/check/include/
 
+VIS_DIR		=	./visualizer
+VIS_EXE		=	$(VIS_DIR)/build/bin/visualizer
+
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(ARCS)
 
@@ -72,6 +75,12 @@ $(TESTOBJDIR):
 $(TEST): $(TESTOBJS) $(ARCS)
 	$(CC) -o $(TEST) $(TESTOBJS) $(ARCS) $(CHECK_LIB) $(CHECK_INC)
 
+$(VIS_DIR):
+	git clone https://github.com/o-reo/push_swap_visualizer.git $(VIS_DIR); (cd $(VIS_DIR) && mkdir build)
+
+$(VIS_EXE): $(VIS_DIR)
+	(cd $(VIS_DIR)/build && cmake .. && make)
+
 all: $(NAME)
 
 clean: test_clean
@@ -96,5 +105,11 @@ test_clean:
 	$(RM) $(RMFLAGS) $(TESTOBJDIR) $(TEST)
 
 test_re: test_clean test
+
+vis: $(NAME) $(VIS_EXE)
+	$(VIS_EXE)
+
+visclean:
+	$(RM) $(RMFLAGS) $(VIS_DIR)
 
 .PHONY: all clean fclean libclean re reb

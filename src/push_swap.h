@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 10:15:46 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/10 10:59:28 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ typedef struct s_push_swap
 // input.c
 t_push_swap	*ft_init_data(void);
 void		ft_get_input(t_push_swap *data, int argc, char **argv);
+
+// algorithm.c
+int			ft_is_sorted(t_stack *stack);
+void		ft_sort(t_push_swap *data);
 
 // ops_main.c
 void		ft_swap(t_stack *stack);

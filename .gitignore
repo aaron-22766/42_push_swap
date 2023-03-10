@@ -1,6 +1,7 @@
 push_swap
-push_swap_visualizer
+visualizer/
 *obj*/
 lib/
 tests/test
+imgui.ini
 .DS_Store
