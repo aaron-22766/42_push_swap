@@ -1,0 +1,8 @@
+lib/
+obj/
+visualizer/
+.push_swap*
+imgui.ini
+ps_tester.pl
+push_swap
+checker
