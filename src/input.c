@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 09:59:57 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:59:43 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ t_push_swap	*ft_init_data(void)
 	data->b->count = 0;
 	data->b->top = 0;
 	data->split = 0;
+	data->q_size = 2;
+	data->queue = ft_calloc(data->q_size + 1, sizeof(char));
+	if (!data->queue)
+		ft_exit(data, 1);
 	return (data);
 }
 

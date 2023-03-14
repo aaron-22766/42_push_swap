@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/10 11:51:55 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/14 10:02:21 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ CHECK_INC	=	-I $(HOME)/.brew/opt/check/include/
 
 VIS_DIR		=	./visualizer
 VIS_EXE		=	$(VIS_DIR)/build/bin/visualizer
+
+TESTER		=	./ps_tester.pl
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(ARCS)
@@ -111,5 +113,22 @@ vis: $(NAME) $(VIS_EXE)
 
 visclean:
 	$(RM) $(RMFLAGS) $(VIS_DIR)
+
+$(TESTER):
+	curl https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl -o $(TESTER)
+
+TEST_AMOUNT	=	10
+
+3: $(NAME) $(TESTER)
+	perl $(TESTER) 3 $(TEST_AMOUNT)
+
+5: $(TESTER)
+	perl $(TESTER) 5 $(TEST_AMOUNT)
+
+100: $(TESTER)
+	perl $(TESTER) 100 $(TEST_AMOUNT)
+
+500: $(TESTER)
+	perl $(TESTER) 500 $(TEST_AMOUNT)
 
 .PHONY: all clean fclean libclean re reb

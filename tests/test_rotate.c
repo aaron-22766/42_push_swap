@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:41:07 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 16:32:01 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:06:23 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ START_TEST(rotate1_1)
 	int	a[] = {1, 2, 3};
 	int	b[] = {};
 
-	ft_rotate(data->a, 0);
-	ft_rotate(data->b, 0);
+	ft_rotate(data->a);
+	ft_rotate(data->b);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 1, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -61,8 +61,8 @@ START_TEST(rotate1_2)
 	int	a[] = {1, 2, 3};
 	int	b[] = {};
 
-	ft_rotate(data->a, 0);
-	ft_rotate(data->a, 0);
+	ft_rotate(data->a);
+	ft_rotate(data->a);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 2, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -71,12 +71,12 @@ START_TEST(rotate1_3)
 	int	a[] = {1, 2, 3};
 	int	b[] = {};
 
-	ft_rotate(data->a, 0);
-	ft_rotate(data->a, 0);
-	ft_rotate(data->a, 0);
-	ft_rotate(data->b, 0);
-	ft_rotate(data->b, 0);
-	ft_rotate(data->b, 0);
+	ft_rotate(data->a);
+	ft_rotate(data->a);
+	ft_rotate(data->a);
+	ft_rotate(data->b);
+	ft_rotate(data->b);
+	ft_rotate(data->b);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 0, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -96,7 +96,7 @@ START_TEST(rotate2_1)
 
 	i = -1;
 	while (++i < 1)
-		ft_rotate(data->a, 0);
+		ft_rotate(data->a);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 1, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -108,7 +108,7 @@ START_TEST(rotate2_2)
 
 	i = -1;
 	while (++i < 11)
-		ft_rotate(data->a, 0);
+		ft_rotate(data->a);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 11, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -120,7 +120,7 @@ START_TEST(rotate2_3)
 
 	i = -1;
 	while (++i < 20)
-		ft_rotate(data->a, 0);
+		ft_rotate(data->a);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 0, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -140,8 +140,8 @@ START_TEST(reverse_rotate1)
 
 	i = -1;
 	while (++i < 1)
-		ft_rotate(data->a, 1);
-	ft_rotate(data->b, 1);
+		ft_reverse_rotate(data->a);
+	ft_reverse_rotate(data->b);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 7, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -153,11 +153,11 @@ START_TEST(reverse_rotate2)
 
 	i = -1;
 	while (++i < 50)
-		ft_rotate(data->a, 1);
+		ft_reverse_rotate(data->a);
 	i = -1;
 	while (++i < 2)
-		ft_rotate(data->a, 0);
-	ft_rotate(data->b, 1);
+		ft_rotate(data->a);
+	ft_reverse_rotate(data->b);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 0, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 
@@ -169,17 +169,17 @@ START_TEST(reverse_rotate3)
 
 	i = -1;
 	while (++i < 2)
-		ft_rotate(data->a, 0);
+		ft_rotate(data->a);
 	i = -1;
 	while (++i < 4)
-		ft_rotate(data->a, 1);
+		ft_reverse_rotate(data->a);
 	i = -1;
 	while (++i < 8)
-		ft_rotate(data->a, 0);
+		ft_rotate(data->a);
 	i = -1;
 	while (++i < 16)
-		ft_rotate(data->a, 1);
-	ft_rotate(data->b, 1);
+		ft_reverse_rotate(data->a);
+	ft_reverse_rotate(data->b);
 	ft_check_valid(a, sizeof(a)/sizeof(int), 6, b, sizeof(b)/sizeof(int), 0);
 }	END_TEST
 

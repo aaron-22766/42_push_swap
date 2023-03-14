@@ -1,7 +1,0 @@
-push_swap
-visualizer/
-*obj*/
-lib/
-tests/test
-imgui.ini
-.DS_Store
