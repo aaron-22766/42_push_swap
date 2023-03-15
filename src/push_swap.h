@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/14 16:38:18 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:41:05 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 # include "../lib/libft/libft.h"
 
 /* ************************************************************************** */
@@ -47,9 +48,10 @@ typedef struct s_push_swap
 {
 	t_stack	*a;
 	t_stack	*b;
-	char	**split;
 	char	*queue;
 	size_t	q_size;
+	int		*input;
+	char	**split;
 }	t_push_swap;
 
 /* ************************************************************************** */

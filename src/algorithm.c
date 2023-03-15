@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/14 16:35:33 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:49:30 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_get_index_of_lowest_number(t_stack *stack)
 	int	lowest;
 	int	index;
 
-	lowest = INT32_MAX;
+	lowest = INT_MAX;
 	i = -1;
 	while (++i < stack->count)
 	{
@@ -58,7 +58,7 @@ int	ft_get_index_of_lowest_number(t_stack *stack)
 	return (index);
 }
 
-void	ft_sort_into_queue(t_push_swap *data)
+void	ft_selection_sort(t_push_swap *data)
 {
 	int	i;
 
@@ -75,4 +75,21 @@ void	ft_sort_into_queue(t_push_swap *data)
 	}
 	while (data->b->count)
 		ft_execute_op(data, PUSH | A);
+}
+
+void	ft_sort_three(t_push_swap *data)
+{
+	
+}
+
+void	ft_sort_into_queue(t_push_swap *data)
+{
+	if (data->a->count == 2)
+		ft_execute_op(data, SWAP | A);
+	else if (data->a->count == 3)
+		ft_sort_three(data);
+	else if (data->a->count < 10)
+		ft_selection_sort(data);
+	else
+		ft_selection_sort(data);
 }

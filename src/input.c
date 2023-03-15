@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/14 16:59:43 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:44:25 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_push_swap	*ft_init_data(void)
 	data->b->stack = 0;
 	data->b->count = 0;
 	data->b->top = 0;
+	data->input = 0;
 	data->split = 0;
 	data->q_size = 2;
 	data->queue = ft_calloc(data->q_size + 1, sizeof(char));
@@ -62,7 +63,7 @@ static void	ft_check_valid_number(t_push_swap *data, char *str)
 		ft_exit(data, 1);
 	i = -1;
 	while (++i < data->a->top)
-		if (data->a->stack[i] == num)
+		if (data->input[i] == num)
 			ft_exit(data, 1);
 }
 
@@ -93,15 +94,43 @@ static void	ft_count_input(t_push_swap *data, int argc, char **argv)
 	}
 }
 
+static void	ft_convert_to_order(t_push_swap *data, int i, long long min)
+{
+	long long	lowest;
+	int			lowest_index;
+	int			j;
+
+	data->a->stack = malloc(sizeof(int) * data->a->count);
+	data->b->stack = malloc(sizeof(int) * data->a->count);
+	if (!data->a->stack || !data->b->stack)
+		ft_exit(data, 1);
+	while (i < data->a->count)
+	{
+		j = -1;
+		lowest = LLONG_MAX;
+		while (++j < data->a->count)
+		{
+			if (data->input[j] < lowest && data->input[j] > min)
+			{
+				lowest = data->input[j];
+				lowest_index = j;
+			}
+		}
+		min = lowest;
+		data->a->stack[lowest_index] = i++;
+	}
+	free(data->input);
+	data->input = 0;
+}
+
 void	ft_get_input(t_push_swap *data, int argc, char **argv)
 {
 	int	i;
 	int	j;
 
 	ft_count_input(data, argc, argv);
-	data->a->stack = malloc(sizeof(int) * data->a->count);
-	data->b->stack = malloc(sizeof(int) * data->a->count);
-	if (!data->a->stack || !data->b->stack)
+	data->input = malloc(sizeof(int) * data->a->count);
+	if (!data->input)
 		ft_exit(data, 1);
 	i = 0;
 	while (++i < argc)
@@ -111,11 +140,12 @@ void	ft_get_input(t_push_swap *data, int argc, char **argv)
 		while (data->split[++j])
 		{
 			ft_check_valid_number(data, data->split[j]);
-			data->a->stack[data->a->top++] = ft_atoi(data->split[j]);
+			data->input[data->a->top++] = ft_atoi(data->split[j]);
 		}
 		ft_free_split(data);
 	}
 	if (data->a->count < 2)
 		ft_exit(data, 0);
 	data->a->top = 0;
+	ft_convert_to_order(data, 0, LLONG_MIN);
 }

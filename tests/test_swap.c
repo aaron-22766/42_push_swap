@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:41:07 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/09 14:26:07 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:30:53 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	data_setup1(void)
 
 START_TEST(swap1_1)
 {
-	int	a[] = {2, 1, 3, 4, 5, 6};
+	int	a[] = {1, 0, 2, 3, 4, 5};
 	int	b[] = {};
 	int	top_a;
 
@@ -60,7 +60,7 @@ START_TEST(swap1_1)
 
 START_TEST(swap1_2)
 {
-	int	a[] = {1, 3, 2, 4, 5, 6};
+	int	a[] = {0, 2, 1, 3, 4, 5};
 	int	b[] = {};
 	int	top_a;
 
@@ -72,7 +72,7 @@ START_TEST(swap1_2)
 
 START_TEST(swap1_3)
 {
-	int	a[] = {6, 2, 3, 4, 5, 1};
+	int	a[] = {5, 1, 2, 3, 4, 0};
 	int	b[] = {};
 	int	top_a;
 
@@ -92,7 +92,7 @@ static void	data_setup2(void)
 
 START_TEST(swap2_1)
 {
-	int	a[] = {23244, 29551, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, -5331, 1186, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 34061};
+	int	a[] = {9, 10, 7, 8, 19, 13, 17, 15, 1, 2, 0, 3, 16, 5, 4, 12, 14, 18, 6, 11};
 	int	b[] = {};
 	int	top_a;
 
@@ -104,7 +104,7 @@ START_TEST(swap2_1)
 
 START_TEST(swap2_2)
 {
-	int	a[] = {29551, 23244, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, 1186, -5331, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 34061};
+	int	a[] = {10, 9, 7, 8, 19, 13, 17, 15, 1, 2, 3, 0, 16, 5, 4, 12, 14, 18, 6, 11};
 	int	b[] = {};
 	int	top_a;
 
@@ -116,7 +116,7 @@ START_TEST(swap2_2)
 
 START_TEST(swap2_3)
 {
-	int	a[] = {34061, 23244, 15662, 20439, 91011, 45030, 71706, 55650, -4475, -2306, -5331, 1186, 61811, 4341, 3850, 45012, 52150, 77327, 8287, 29551};
+	int	a[] = {11, 9, 7, 8, 19, 13, 17, 15, 1, 2, 0, 3, 16, 5, 4, 12, 14, 18, 6, 10};
 	int	b[] = {};
 	int	top_a;
 
@@ -136,8 +136,8 @@ static void	data_setup3(void)
 
 START_TEST(swap3_1)
 {
-	int	a[] = {0, 789};
-	int	b[] = {123456};
+	int	a[] = {0, 1};
+	int	b[] = {2};
 
 	ft_push(data->a, data->b);
 	ft_swap(data->a);
@@ -147,7 +147,7 @@ START_TEST(swap3_1)
 START_TEST(swap3_2)
 {
 	int	a[] = {0};
-	int	b[] = {789, 123456};
+	int	b[] = {1, 2};
 
 	ft_push(data->a, data->b);
 	ft_push(data->a, data->b);
@@ -158,7 +158,7 @@ START_TEST(swap3_2)
 START_TEST(swap3_3)
 {
 	int	a[] = {};
-	int	b[] = {0, 789, 123456};
+	int	b[] = {0, 1, 2};
 
 	ft_push(data->a, data->b);
 	ft_push(data->a, data->b);
