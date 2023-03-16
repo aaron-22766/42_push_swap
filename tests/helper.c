@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:12:56 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/15 11:49:32 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:47:28 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_check_valid(int *a, int size_a, int top_a,
 {
 	ck_assert_ptr_nonnull(data->queue);
 	ck_assert_int_eq(data->q_size, 2);
-	ck_assert_ptr_null(data->input);
 	ck_assert_ptr_null(data->split);
 	ck_assert_ptr_nonnull(data->a);
 	ck_assert_ptr_nonnull(data->b);

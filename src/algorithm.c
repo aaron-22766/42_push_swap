@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/16 17:09:00 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:49:24 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,4 @@ void	ft_sort_into_queue(t_push_swap *data)
 		ft_selection_sort(data);
 	else
 		ft_radix_sort(data);
-	// print_stack(data->a);
 }

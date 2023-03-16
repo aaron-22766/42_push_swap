@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/14 10:02:21 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/16 17:36:35 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ $(TESTOBJDIR)/%.o: $(SRCDIR)/%.c | $(TESTOBJDIR)
 $(TESTOBJDIR):
 	mkdir -p $(TESTOBJDIR)
 
-$(TEST): $(TESTOBJS) $(ARCS)
+$(TEST): $(NAME) $(TESTOBJS) $(ARCS)
 	$(CC) -o $(TEST) $(TESTOBJS) $(ARCS) $(CHECK_LIB) $(CHECK_INC)
 
 $(VIS_DIR):
