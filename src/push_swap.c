@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/14 16:59:18 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:28:21 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	if (ft_is_sorted(data->a))
 		ft_exit(data, 0);
 	ft_sort_into_queue(data);
-	ft_optimize_queue(data->queue);
+	ft_optimize_queue(data);
 	ft_print_queue(data);
 	ft_exit(data, 0);
 }

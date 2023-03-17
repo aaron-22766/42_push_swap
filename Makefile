@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/16 17:36:35 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/17 15:01:04 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,18 +117,16 @@ visclean:
 $(TESTER):
 	curl https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl -o $(TESTER)
 
-TEST_AMOUNT	=	10
-
 3: $(NAME) $(TESTER)
-	perl $(TESTER) 3 $(TEST_AMOUNT)
+	perl $(TESTER) 3 10
 
-5: $(TESTER)
-	perl $(TESTER) 5 $(TEST_AMOUNT)
+5: $(NAME) $(TESTER)
+	perl $(TESTER) 5 100
 
-100: $(TESTER)
-	perl $(TESTER) 100 $(TEST_AMOUNT)
+100: $(NAME) $(TESTER)
+	perl $(TESTER) 100 1
 
-500: $(TESTER)
-	perl $(TESTER) 500 $(TEST_AMOUNT)
+500: $(NAME) $(TESTER)
+	perl $(TESTER) 500 1
 
 .PHONY: all clean fclean libclean re reb

@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/16 17:37:29 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:52:22 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		ft_sort_into_queue(t_push_swap *data);
 
 // queue.c
 void		ft_op_to_queue(t_push_swap *data, char op);
-void		ft_optimize_queue(char *queue);
+void		ft_optimize_queue(t_push_swap *data);
 void		ft_print_queue(t_push_swap *data);
 
 // operations.c
