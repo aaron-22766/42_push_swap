@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/17 14:49:26 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:52:48 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,6 @@ void	ft_sort_medium(t_push_swap *data)
 	ft_bring_to_top(data, 0);
 }
 
-int	ft_count_upcoming(t_push_swap *data, int size, int bit, int i)
-{
-	int	count;
-
-	count = 0;
-	while (i < size)
-	{
-		if ((data->a->stack[(data->a->top + i) % data->a->count] >> bit) & 1)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 void	ft_radix_sort(t_push_swap *data)
 {
 	int	size;
@@ -118,7 +104,7 @@ void	ft_radix_sort(t_push_swap *data)
 	while (!(ft_is_sorted(data->a)))
 	{
 		i = -1;
-		while (++i < size && ft_count_upcoming(data, size, bit, i))
+		while (++i < size)
 		{
 			if ((data->a->stack[data->a->top] >> bit) & 1)
 				ft_execute_op(data, ROT | A);
