@@ -6,37 +6,11 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 09:26:51 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:28:32 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_ps	*ft_init_data(void)
-{
-	t_ps	*data;
-
-	data = malloc(sizeof(t_ps));
-	if (!data)
-		ft_exit(data, 1);
-	data->a = malloc(sizeof(t_stack));
-	data->b = malloc(sizeof(t_stack));
-	if (!data->a || !data->b)
-		ft_exit(data, 1);
-	data->a->values = NULL;
-	data->a->head = HEAD;
-	data->a->tail = TAIL;
-	data->a->count = 0;
-	data->a->size = 0;
-	data->b->values = NULL;
-	data->b->head = HEAD;
-	data->b->tail = TAIL;
-	data->b->count = 0;
-	data->b->size = 0;
-	data->ops = NULL;
-	data->split = NULL;
-	return (data);
-}
 
 static void	ft_count_input(t_ps *data, int argc, char **argv)
 {

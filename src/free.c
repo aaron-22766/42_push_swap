@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 10:34:00 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:31:58 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,20 @@ void	ft_free_split(t_ps *data)
 	data->split = 0;
 }
 
-void	ft_free_data(t_ps *data)
-{
-	if (!data)
-		return ;
-	ft_free_split(data);
-	free(data->ops);
-	free(data->a->values);
-	free(data->a);
-	free(data->b->values);
-	free(data->b);
-	free(data);
-	data = 0;
-}
-
 void	ft_exit(t_ps *data, int error)
 {
-	ft_free_data(data);
+	if (data)
+	{
+		ft_free_split(data);
+		free(data->ops);
+		free(data->a->values);
+		free(data->a);
+		free(data->b->values);
+		free(data->b);
+		free(data);
+	}
 	if (error)
-		ft_putstr_fd("Error\n", STDERR_FILENO);
+		ft_putendl_fd("Error", STDERR_FILENO);
 	// system("leaks push_swap");
 	exit(!!error);
 }

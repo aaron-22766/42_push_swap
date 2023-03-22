@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 10:30:50 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:53:02 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ void	print_stack(t_stack *stack)
 	count = 0;
 	i = 0;
 	while (i < stack->count)
-	{
-		count += ft_printf("%d, ", stack->values[(stack->head + i)
-				% stack->size]);
-		i++;
-	}
+		count += ft_printf("%d, ", *ft_peek(stack, i++));
 	count = stack->size * 3 - count;
 	padding = ft_calloc(count + 1, sizeof(char));
 	if (!padding)
@@ -43,26 +39,20 @@ int	ft_is_sorted(t_stack *stack)
 
 	i = -1;
 	while (++i + 1 < stack->count)
-		if (stack->values[(stack->head + i) % stack->size]
-			> stack->values[(stack->head + i + 1) % stack->size])
+		if (*ft_peek(stack, i) > *ft_peek(stack, i + 1))
 			return (0);
 	return (1);
 }
 
 void	ft_sort_three(t_ps *data)
 {
-	int	first;
-	int	second;
-	int	third;
-
 	if (ft_is_sorted(data->a))
 		return ;
-	first = data->a->values[data->a->head];
-	second = data->a->values[(data->a->head + 1) % data->a->size];
-	third = data->a->values[(data->a->head + 2) % data->a->size];
-	if (first > third && first > second)
+	if (*ft_peek(data->a, 0) > *ft_peek(data->a, 2)
+		&& *ft_peek(data->a, 0) > *ft_peek(data->a, 1))
 		ft_execute_op(data, ROT | A);
-	else if (first > third && first < second)
+	else if (*ft_peek(data->a, 0) > *ft_peek(data->a, 2)
+		&& *ft_peek(data->a, 0) < *ft_peek(data->a, 1))
 		ft_execute_op(data, REV | A);
 	else
 		ft_execute_op(data, SWAP | A);
@@ -75,7 +65,7 @@ void	ft_bring_to_top(t_ps *data, int n)
 
 	i = -1;
 	while (++i < data->a->count)
-		if (data->a->values[(data->a->head + i) % data->a->size] == n)
+		if (*ft_peek(data->a, i) == n)
 			break ;
 	if (i > data->a->count / 2)
 		while (i++ < data->a->count)
@@ -92,12 +82,11 @@ void	ft_sort_medium(t_ps *data)
 	ft_sort_three(data);
 	while (data->b->count)
 	{
-		if (data->b->count > 1 && data->b->values[data->b->head]
-			< data->b->values[(data->b->head + 1) % data->b->size])
+		if (data->b->count > 1 && *ft_peek(data->b, 0) < *ft_peek(data->b, 1))
 			ft_execute_op(data, SWAP | B);
-		if (data->a->values[data->a->head] != data->b->values[data->b->head] + 1
-			&& data->b->values[data->b->head] != data->a->size - 1)
-			ft_bring_to_top(data, data->b->values[data->b->head] + 1);
+		if (*ft_peek(data->a, 0) != *ft_peek(data->b, 0) + 1
+			&& *ft_peek(data->b, 0) != data->a->size - 1)
+			ft_bring_to_top(data, *ft_peek(data->b, 0) + 1);
 		ft_execute_op(data, PUSH | A);
 	}
 	ft_bring_to_top(data, 0);
@@ -111,12 +100,12 @@ void	ft_radix_sort(t_ps *data)
 
 	count = data->a->count;
 	bit = 0;
-	while (!(ft_is_sorted(data->a)))
+	while (!ft_is_sorted(data->a))
 	{
 		i = -1;
 		while (++i < count)
 		{
-			if ((data->a->values[data->a->head] >> bit) & 1)
+			if ((*ft_peek(data->a, 0) >> bit) & 1)
 				ft_execute_op(data, ROT | A);
 			else
 				ft_execute_op(data, PUSH | B);
@@ -138,3 +127,14 @@ void	ft_sort(t_ps *data)
 	else
 		ft_radix_sort(data);
 }
+
+/**
+ * better algo!!
+ * 
+ * 4 1 2 3 0:
+ * pb
+ * rra
+ * pa
+ * ra
+ * 
+ */

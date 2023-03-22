@@ -6,45 +6,11 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:58:37 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 10:03:12 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:56:33 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void	ft_push(t_stack *stack, int value, int where)
-{
-	stack->count++;
-	if (where == HEAD)
-	{
-		stack->head = (stack->head + stack->size - 1) % stack->size;
-		stack->values[stack->head] = value;
-	}
-	else if (where == TAIL)
-	{
-		stack->tail = (stack->tail + 1) % stack->size;
-		stack->values[stack->tail] = value;
-	}
-}
-
-static int	ft_pop(t_stack *stack, int where)
-{
-	int	result;
-
-	result = -1;
-	stack->count--;
-	if (where == HEAD)
-	{
-		result = stack->values[stack->head];
-		stack->head = (stack->head + 1) % stack->size;
-	}
-	else if (where == TAIL)
-	{
-		result = stack->values[stack->tail];
-		stack->tail = (stack->tail + stack->size - 1) % stack->size;
-	}
-	return (result);
-}
 
 static void	ft_swap(t_stack *stack)
 {
@@ -52,9 +18,34 @@ static void	ft_swap(t_stack *stack)
 
 	if (stack->count < 2)
 		return ;
-	temp = stack->values[stack->head];
-	stack->values[stack->head] = stack->values[(stack->head + 1) % stack->size];
-	stack->values[(stack->head + 1) % stack->size] = temp;
+	temp = *ft_peek(stack, 0);
+	*(ft_peek(stack, 0)) = *ft_peek(stack, 1);
+	*ft_peek(stack, 1) = temp;
+}
+
+static void	ft_queue_op(t_ps *data, char op)
+{
+	static size_t	size;
+	static size_t	i;
+	char			*temp;
+
+	if (i == size)
+	{
+		if (!size)
+			size = 1;
+		else if (size < 1024)
+			size *= 2;
+		else
+			size += 1024;
+		temp = ft_calloc(size + 1, sizeof(char));
+		if (!temp)
+			ft_exit(data, 1);
+		if (data->ops)
+			ft_strlcpy(temp, data->ops, size + 1);
+		free(data->ops);
+		data->ops = temp;
+	}
+	data->ops[i++] = op;
 }
 
 void	ft_execute_op(t_ps *data, char op)

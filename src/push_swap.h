@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 10:29:29 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:41:22 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,23 @@ void	print_stack(t_stack *stack);////////REMOVE BEFORE EVAL//////////
 ////////////////////////////////////////////////////////////////////////
 
 // input.c
-t_ps	*ft_init_data(void);
 void	ft_get_input(t_ps *data, int argc, char **argv);
+
+// stack.c
+int		*ft_peek(t_stack *stack, int index);
+void	ft_push(t_stack *stack, int value, int where);
+int		ft_pop(t_stack *stack, int where);
 
 // algorithm.c
 int		ft_is_sorted(t_stack *stack);
 void	ft_sort(t_ps *data);
 
-// queue.c
-void	ft_queue_op(t_ps *data, char op);
-void	ft_optimize_ops(t_ps *data);
-void	ft_print_ops(t_ps *data);
-
 // operations.c
 void	ft_execute_op(t_ps *data, char op);
 void	ft_add_to_stack(t_stack *stack, int value, int where);
+
+// ops_queue.c
+void	ft_optimize_ops(t_ps *data);
 
 // free.c
 void	ft_free_split(t_ps *data);
