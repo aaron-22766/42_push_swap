@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/21 12:47:26 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:55:26 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_push_swap	*data;
+	t_ps	*data;
 
 	if (argc == 1)
 		return (0);
@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 	ft_get_input(data, argc, argv);
 	if (ft_is_sorted(data->a))
 		ft_exit(data, 0);
-	ft_sort_into_queue(data);
-	ft_optimize_queue(data);
-	ft_print_queue(data);
+	ft_sort(data);
+	ft_optimize_ops(data);
+	ft_print_ops(data);
 	ft_exit(data, 0);
 }

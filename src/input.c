@@ -6,38 +6,67 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/16 17:47:42 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:26:51 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_push_swap	*ft_init_data(void)
+t_ps	*ft_init_data(void)
 {
-	t_push_swap	*data;
+	t_ps	*data;
 
-	data = malloc(sizeof(t_push_swap));
+	data = malloc(sizeof(t_ps));
 	if (!data)
 		ft_exit(data, 1);
 	data->a = malloc(sizeof(t_stack));
 	data->b = malloc(sizeof(t_stack));
 	if (!data->a || !data->b)
 		ft_exit(data, 1);
-	data->a->stack = 0;
+	data->a->values = NULL;
+	data->a->head = HEAD;
+	data->a->tail = TAIL;
 	data->a->count = 0;
-	data->a->top = 0;
-	data->b->stack = 0;
+	data->a->size = 0;
+	data->b->values = NULL;
+	data->b->head = HEAD;
+	data->b->tail = TAIL;
 	data->b->count = 0;
-	data->b->top = 0;
-	data->split = 0;
-	data->q_size = 2;
-	data->queue = ft_calloc(data->q_size + 1, sizeof(char));
-	if (!data->queue)
-		ft_exit(data, 1);
+	data->b->size = 0;
+	data->ops = NULL;
+	data->split = NULL;
 	return (data);
 }
 
-static void	ft_check_valid_number(t_push_swap *data, char *str)
+static void	ft_count_input(t_ps *data, int argc, char **argv)
+{
+	int	empty;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (++i < argc)
+	{
+		j = 0;
+		empty = 1;
+		while (argv[i][j] == ' ')
+				j++;
+		while (argv[i][++j - 1])
+		{
+			if (ft_strchr("0123456789", argv[i][j - 1]))
+				empty = 0;
+			if (argv[i][j - 1] == ' ' && argv[i][j] != ' '
+					&& argv[i][j] != '\0')
+				data->a->size++;
+		}
+		if (empty)
+			ft_exit(data, 1);
+		data->a->size++;
+	}
+	data->b->size = data->a->size;
+}
+
+static void	ft_check_valid_number(t_ps *data, char *str)
 {
 	int	first_non_zero;
 	int	i;
@@ -61,39 +90,12 @@ static void	ft_check_valid_number(t_push_swap *data, char *str)
 	if (i - first_non_zero > 9 && (num == -1 || num == 0))
 		ft_exit(data, 1);
 	i = -1;
-	while (++i < data->a->top)
-		if (data->b->stack[i] == num)
+	while (++i < data->a->count)
+		if (data->b->values[i] == num)
 			ft_exit(data, 1);
 }
 
-static void	ft_count_input(t_push_swap *data, int argc, char **argv)
-{
-	int	empty;
-	int	i;
-	int	j;
-
-	i = 0;
-	while (++i < argc)
-	{
-		j = 0;
-		empty = 1;
-		while (argv[i][j] == ' ')
-				j++;
-		while (argv[i][++j - 1])
-		{
-			if (ft_strchr("0123456789", argv[i][j - 1]))
-				empty = 0;
-			if (argv[i][j - 1] == ' ' && argv[i][j] != ' '
-					&& argv[i][j] != '\0')
-				data->a->count++;
-		}
-		if (empty)
-			ft_exit(data, 1);
-		data->a->count++;
-	}
-}
-
-static void	ft_convert_to_order(t_push_swap *data)
+static void	ft_convert_to_order(t_stack *a, t_stack *b)
 {
 	long long	min;
 	long long	lowest;
@@ -103,32 +105,33 @@ static void	ft_convert_to_order(t_push_swap *data)
 
 	min = LLONG_MIN;
 	i = 0;
-	while (i < data->a->count)
+	while (i < a->count)
 	{
 		j = -1;
 		lowest = LLONG_MAX;
-		while (++j < data->a->count)
+		while (++j < a->count)
 		{
-			if (data->b->stack[j] < lowest && data->b->stack[j] > min)
+			if (b->values[j] < lowest && b->values[j] > min)
 			{
-				lowest = data->b->stack[j];
+				lowest = b->values[j];
 				lowest_index = j;
 			}
 		}
 		min = lowest;
-		data->a->stack[lowest_index] = i++;
+		a->values[lowest_index] = i++;
 	}
+	a->tail = a->count - 1;
 }
 
-void	ft_get_input(t_push_swap *data, int argc, char **argv)
+void	ft_get_input(t_ps *data, int argc, char **argv)
 {
 	int	i;
 	int	j;
 
 	ft_count_input(data, argc, argv);
-	data->a->stack = malloc(sizeof(int) * data->a->count);
-	data->b->stack = malloc(sizeof(int) * data->a->count);
-	if (!data->a->stack || !data->b->stack)
+	data->a->values = malloc(sizeof(int) * data->a->size);
+	data->b->values = malloc(sizeof(int) * data->b->size);
+	if (!data->a->values || !data->b->values)
 		ft_exit(data, 1);
 	i = 0;
 	while (++i < argc)
@@ -138,12 +141,11 @@ void	ft_get_input(t_push_swap *data, int argc, char **argv)
 		while (data->split[++j])
 		{
 			ft_check_valid_number(data, data->split[j]);
-			data->b->stack[data->a->top++] = ft_atoi(data->split[j]);
+			data->b->values[data->a->count++] = ft_atoi(data->split[j]);
 		}
 		ft_free_split(data);
 	}
-	if (data->a->count < 2)
+	if (data->a->size < 2)
 		ft_exit(data, 0);
-	data->a->top = 0;
-	ft_convert_to_order(data);
+	ft_convert_to_order(data->a, data->b);
 }

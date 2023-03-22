@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/17 15:01:04 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/22 11:55:20 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,9 @@ NAME		=	push_swap
 SRCDIR		=	./src
 OBJDIR		=	./obj
 LIBDIR		=	./lib
-TESTDIR		=	./tests
-TESTOBJDIR	=	$(TESTDIR)/obj
-TEST		=	$(TESTDIR)/test
 
 SRCS		=	$(wildcard $(SRCDIR)/*.c)
 OBJS		=	$(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o)))
-TESTSRCS	=	$(wildcard $(TESTDIR)/*.c)
-TESTOBJS	=	$(filter-out $(TESTOBJDIR)/push_swap.o, \
-				$(addprefix $(TESTOBJDIR)/,$(notdir $(TESTSRCS:.c=.o))) \
-				$(addprefix $(TESTOBJDIR)/,$(notdir $(SRCS:.c=.o))))
 
 # **************************************************************************** #
 #                               CHANGE WILDCARD                                #
@@ -65,18 +58,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
-$(TESTOBJDIR)/%.o: $(TESTDIR)/%.c | $(TESTOBJDIR)
-	$(CC) -c $(CFLAGS) $< -o $@ $(CHECK_INC)
-
-$(TESTOBJDIR)/%.o: $(SRCDIR)/%.c | $(TESTOBJDIR)
-	$(CC) -c $(CFLAGS) -D ft_putstr_fd=putstr_ignored $< -o $@ $(CHECK_INC)
-
-$(TESTOBJDIR):
-	mkdir -p $(TESTOBJDIR)
-
-$(TEST): $(NAME) $(TESTOBJS) $(ARCS)
-	$(CC) -o $(TEST) $(TESTOBJS) $(ARCS) $(CHECK_LIB) $(CHECK_INC)
-
 $(VIS_DIR):
 	git clone https://github.com/o-reo/push_swap_visualizer.git $(VIS_DIR); (cd $(VIS_DIR) && mkdir build)
 
@@ -85,7 +66,7 @@ $(VIS_EXE): $(VIS_DIR)
 
 all: $(NAME)
 
-clean: test_clean
+clean: all
 	$(RM) $(RMFLAGS) $(OBJDIR)
 	make -C $(LIBFT_DIR) clean
 
@@ -93,20 +74,15 @@ fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
 	make -C $(LIBFT_DIR) fclean
 
-libclean: fclean
+libclean:
 	$(RM) $(RMFLAGS) $(LIBDIR)
+
+allclean: fclean libclean
+	$(RM) $(RMFLAGS) $(VIS_DIR) $(TESTER) .push_swap_test_results.log imgui.ini
 
 re: fclean all
 
 reb: fclean bonus
-
-test: $(TEST)
-	@./$(TEST)
-
-test_clean:
-	$(RM) $(RMFLAGS) $(TESTOBJDIR) $(TEST)
-
-test_re: test_clean test
 
 vis: $(NAME) $(VIS_EXE)
 	$(VIS_EXE)
@@ -124,9 +100,9 @@ $(TESTER):
 	perl $(TESTER) 5 100
 
 100: $(NAME) $(TESTER)
-	perl $(TESTER) 100 1
+	perl $(TESTER) 100 10
 
 500: $(NAME) $(TESTER)
-	perl $(TESTER) 500 1
+	perl $(TESTER) 500 10
 
 .PHONY: all clean fclean libclean re reb

@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/17 12:52:22 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:29:29 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,53 +33,57 @@
 # define ROT 16
 # define REV 32
 
+# define HEAD 0
+# define TAIL -1
+
 /* ************************************************************************** */
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
 typedef struct s_stack
 {
-	int	*stack;
+	int	*values;
+	int	head;
+	int	tail;
 	int	count;
-	int	top;
+	int	size;
 }	t_stack;
 
-typedef struct s_push_swap
+typedef struct s_ps
 {
 	t_stack	*a;
 	t_stack	*b;
-	char	*queue;
-	size_t	q_size;
+	char	*ops;
 	char	**split;
-}	t_push_swap;
+}	t_ps;
 
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
 
+////////////////////////////////////////////////////////////////////////
+void	print_stack(t_stack *stack);////////REMOVE BEFORE EVAL//////////
+////////////////////////////////////////////////////////////////////////
+
 // input.c
-t_push_swap	*ft_init_data(void);
-void		ft_get_input(t_push_swap *data, int argc, char **argv);
+t_ps	*ft_init_data(void);
+void	ft_get_input(t_ps *data, int argc, char **argv);
 
 // algorithm.c
-int			ft_is_sorted(t_stack *stack);
-void		ft_sort_into_queue(t_push_swap *data);
+int		ft_is_sorted(t_stack *stack);
+void	ft_sort(t_ps *data);
 
 // queue.c
-void		ft_op_to_queue(t_push_swap *data, char op);
-void		ft_optimize_queue(t_push_swap *data);
-void		ft_print_queue(t_push_swap *data);
+void	ft_queue_op(t_ps *data, char op);
+void	ft_optimize_ops(t_ps *data);
+void	ft_print_ops(t_ps *data);
 
 // operations.c
-void		ft_execute_op(t_push_swap *data, char op);
-void		ft_swap(t_stack *stack);
-void		ft_push(t_stack *from, t_stack *to);
-void		ft_rotate(t_stack *stack);
-void		ft_reverse_rotate(t_stack *stack);
+void	ft_execute_op(t_ps *data, char op);
+void	ft_add_to_stack(t_stack *stack, int value, int where);
 
 // free.c
-void		ft_free_split(t_push_swap *data);
-void		ft_free_data(t_push_swap *data);
-void		ft_exit(t_push_swap *data, int error);
+void	ft_free_split(t_ps *data);
+void	ft_exit(t_ps *data, int error);
 
 #endif

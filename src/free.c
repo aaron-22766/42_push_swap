@@ -6,13 +6,13 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/16 17:54:35 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:34:00 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_free_split(t_push_swap *data)
+void	ft_free_split(t_ps *data)
 {
 	int	i;
 
@@ -23,21 +23,21 @@ void	ft_free_split(t_push_swap *data)
 	data->split = 0;
 }
 
-void	ft_free_data(t_push_swap *data)
+void	ft_free_data(t_ps *data)
 {
 	if (!data)
 		return ;
 	ft_free_split(data);
-	free(data->queue);
-	free(data->a->stack);
+	free(data->ops);
+	free(data->a->values);
 	free(data->a);
-	free(data->b->stack);
+	free(data->b->values);
 	free(data->b);
 	free(data);
 	data = 0;
 }
 
-void	ft_exit(t_push_swap *data, int error)
+void	ft_exit(t_ps *data, int error)
 {
 	ft_free_data(data);
 	if (error)
