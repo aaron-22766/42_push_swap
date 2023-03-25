@@ -63,34 +63,51 @@ static void	ft_clean_swap(char *ops)
 		ops[0] = SWAP | (A * (count_a % 2)) | (B * (count_b % 2));
 }
 
-int	*ft_decrement_count(int count[4], int r, int rr)
+int	*ft_count_helper(int count[4], int r, int temp0, int temp1)
 {
-	int	temp[2];
-
-	temp[0] = !count[r];
-	temp[1] = !count[rr];
-	count[0] -= (temp[1] && count[0]);
-	count[1] -= (temp[0] && count[1]);
-	count[2] -= (temp[1] && count[2]);
-	count[3] -= (temp[0] && count[3]);
+	if (r > 4)
+	{
+		count[0] += ((r & ROT) && (r & A));
+		count[1] += ((r & REV) && (r & A));
+		count[2] += ((r & ROT) && (r & B));
+		count[3] += ((r & REV) && (r & B));
+		return (count);
+	}
+	else if (r == -1)
+	{
+		count[0] = (count[0] - count[1]) * (count[0] > count[1]);
+		count[1] = (count[1] - temp0) * (count[1] > temp0);
+		count[2] = (count[2] - count[3]) * (count[2] > count[3]);
+		count[3] = (count[3] - temp1) * (count[3] > temp1);
+		return (count);
+	}
+	count[0] -= (temp1 && count[0]);
+	count[1] -= (temp0 && count[1]);
+	count[2] -= (temp1 && count[2]);
+	count[3] -= (temp0 && count[3]);
 	return (count);
 }
 
-static void	ft_recreate_rot(char *ops, int count[4])
+// count[0] -> ra
+// count[1] -> rra
+// count[2] -> rb
+// count[3] -> rrb
+static void	ft_clean_rot(char *ops, int count[4], char vis, int i)
 {
-	int	i;
-	int	temp;
 	int	r;
 
-	temp = count[0];
-	count[0] = (count[0] - count[1]) * (count[0] > count[1]);
-	count[1] = (count[1] - temp) * (count[1] > temp);
-	temp = count[2];
-	count[2] = (count[2] - count[3]) * (count[2] > count[3]);
-	count[3] = (count[3] - temp) * (count[3] > temp);
+	while (ops[i] && !(ops[i] & PUSH) && !(ops[i] & vis))
+	{
+		count = ft_count_helper(count, ops[i++], 0, 0);
+		if ((REV | ROT) & ops[i - 1])
+			ops[i - 1] = CLEAR;
+		else if (ops[i - 1] != CLEAR)
+			vis |= ops[i - 1];
+	}
+	count = ft_count_helper(count, -1, count[0], count[2]);
 	i = 0;
-	r = 0;
-	while (r < 3)
+	r = -2;
+	while (++r < 2 && r++ < 2)
 	{
 		while (count[r] || count[r + 1])
 		{
@@ -98,58 +115,27 @@ static void	ft_recreate_rot(char *ops, int count[4])
 				i++;
 			ops[i++] = !count[r] * (REV | (A * !!count[1]) | (B * !!count[3]))
 				+ !count[r + 1] * (ROT | (A * !!count[0]) | (B * !!count[2]));
-			count = ft_decrement_count(count, 0, 1);
+			count = ft_count_helper(count, r, !count[r], !count[r + 1]);
 		}
-		r += 2;
 	}
-}
-
-// count[0] -> ra
-// count[1] -> rra
-// count[2] -> rb
-// count[3] -> rrb
-static void	ft_clean_rot(char *ops)
-{
-	char	vis;
-	int		count[4];
-	int		i;
-
-	vis = 0;
-	i = 4;
-	while (i > 0)
-		count[--i] = 0;
-	while (ops[i] && !(ops[i] & PUSH) && !(ops[i] & vis))
-	{
-		if ((ops[i] & ROT) && (ops[i] & A))
-			count[0]++;
-		if ((ops[i] & REV) && (ops[i] & A))
-			count[1]++;
-		if ((ops[i] & ROT) && (ops[i] & B))
-			count[2]++;
-		if ((ops[i] & REV) && (ops[i] & B))
-			count[3]++;
-		if ((REV | ROT) & ops[i])
-			ops[i] = CLEAR;
-		else if (ops[i] != CLEAR)
-			vis |= ops[i];
-		i++;
-	}
-	ft_recreate_rot(ops, count);
 }
 
 void	ft_optimize_ops(char *ops)
 {
+	int		count[4];
 	char	*prev;
 	char	_do;
 	int		i;
 
+	i = 3;
+	while (i >= 0)
+		count[i--] = 0;
 	prev = 0;
 	_do = -1;
 	while (!(++_do) || ft_strncmp(ops, prev, !!_do * ft_strlen(ops)))
 	{
 		free(prev);
 		prev = ft_strdup(ops);
-		i = -1;
 		while (ops[++i])
 		{
 			if (ops[i] & PUSH)
@@ -157,7 +143,7 @@ void	ft_optimize_ops(char *ops)
 			if (ops[i] & SWAP)
 				ft_clean_swap(&ops[i]);
 			if (ops[i] & (ROT | REV))
-				ft_clean_rot(&ops[i]);
+				ft_clean_rot(&ops[i], count, 0, 0);
 		}
 	}
 	free(prev);
