@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 07:32:02 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:05:05 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ typedef struct s_ps
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
 
-////////////////////////////////////////////////////////////////////////
-void	print_stack(t_stack *stack);////////REMOVE BEFORE EVAL//////////
-////////////////////////////////////////////////////////////////////////
-
 // input.c
 void	ft_get_input(t_ps *data, int argc, char **argv);
 
@@ -75,18 +71,26 @@ void	ft_push(t_stack *stack, int value, int where);
 int		ft_pop(t_stack *stack, int where);
 
 // algorithm.c
-int		ft_is_sorted(t_stack *stack);
 void	ft_sort(t_ps *data);
+
+// sort_big.c
+void	ft_sort_big(t_ps *data);
 
 // operations.c
 void	ft_execute_op(t_ps *data, char op);
-void	ft_add_to_stack(t_stack *stack, int value, int where);
 
 // ops_queue.c
 void	ft_optimize_ops(char *ops);
 
+// utils.c
+int		ft_is_sorted(t_stack *stack);
+
 // free.c
 void	ft_free_split(t_ps *data);
 void	ft_exit(t_ps *data, int error);
+
+////////////////////////////////////////////////////////////////////////
+void		print_stack(t_stack *stack);//////REMOVE BEFORE EVAL////////
+////////////////////////////////////////////////////////////////////////
 
 #endif
