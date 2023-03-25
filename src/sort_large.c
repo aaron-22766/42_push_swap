@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   sort_large.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 17:19:15 by arabenst         ###   ########.fr       */
+/*   Created: 2023/03/25 09:32:02 by arabenst          #+#    #+#             */
+/*   Updated: 2023/03/25 10:18:46 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_free_split(t_ps *data)
+void	ft_sort_big(t_ps *data)
 {
-	int	i;
-
-	i = 0;
-	while (data->split && data->split[i])
-		free(data->split[i++]);
-	free(data->split);
-	data->split = 0;
+	(void)data;
 }
 
-void	ft_exit(t_ps *data, int error)
+void	ft_sort_radix(t_ps *data)
 {
-	if (data)
+	int	count;
+	int	i;
+	int	bit;
+
+	count = data->a->count;
+	bit = 0;
+	while (!ft_is_sorted(data->a))
 	{
-		ft_free_split(data);
-		free(data->ops);
-		free(data->a->values);
-		free(data->a);
-		free(data->b->values);
-		free(data->b);
-		free(data);
+		i = -1;
+		while (++i < count)
+		{
+			if ((*ft_peek(data->a, 0) >> bit) & 1)
+				ft_execute_op(data, ROT | A);
+			else
+				ft_execute_op(data, PUSH | B);
+		}
+		while (data->b->count)
+			ft_execute_op(data, PUSH | A);
+		bit++;
 	}
-	if (error)
-		ft_putendl_fd("Error", STDERR_FILENO);
-	// system("leaks push_swap");
-	exit(!!error);
 }

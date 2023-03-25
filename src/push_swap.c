@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 09:35:23 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:20:36 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ static t_ps	*ft_init_data(void)
 	return (data);
 }
 
-static void	ft_print_ops(t_ps *data)
+void	ft_print_ops(char *ops)
 {
 	int		i;
 	char	op;
 
 	i = -1;
-	while (data->ops[++i])
+	while (ops[++i])
 	{
-		op = data->ops[i];
+		op = ops[i];
 		if (op & SWAP)
 			ft_printf("s%c\n", 'a' + !!(op & B) + 17 * !!(op & A && op & B));
 		else if (op & PUSH)
@@ -67,7 +67,7 @@ int	main(int argc, char **argv)
 	data = ft_init_data();
 	ft_get_input(data, argc, argv);
 	ft_sort(data);
-	ft_optimize_ops(data->ops);
-	ft_print_ops(data);
+	ft_optimize_ops(data, data->ops);
+	ft_print_ops(data->ops);
 	ft_exit(data, 0);
 }

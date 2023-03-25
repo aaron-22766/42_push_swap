@@ -92,21 +92,22 @@ int	*ft_count_helper(int count[4], int r, int temp0, int temp1)
 // count[1] -> rra
 // count[2] -> rb
 // count[3] -> rrb
-static void	ft_clean_rot(char *ops, int count[4], char vis, int i)
+static void	ft_clean_rot(char *ops, char vis, int i, int r)
 {
-	int	r;
+	int	count[4];
 
+	while (i > 0)
+		count[--i] = 0;
 	while (ops[i] && !(ops[i] & PUSH) && !(ops[i] & vis))
 	{
-		count = ft_count_helper(count, ops[i++], 0, 0);
+		ft_count_helper(count, ops[i++], 0, 0);
 		if ((REV | ROT) & ops[i - 1])
 			ops[i - 1] = CLEAR;
 		else if (ops[i - 1] != CLEAR)
 			vis |= ops[i - 1];
 	}
-	count = ft_count_helper(count, -1, count[0], count[2]);
+	ft_count_helper(count, -1, count[0], count[2]);
 	i = 0;
-	r = -2;
 	while (++r < 2 && r++ < 2)
 	{
 		while (count[r] || count[r + 1])
@@ -115,22 +116,19 @@ static void	ft_clean_rot(char *ops, int count[4], char vis, int i)
 				i++;
 			ops[i++] = !count[r] * (REV | (A * !!count[1]) | (B * !!count[3]))
 				+ !count[r + 1] * (ROT | (A * !!count[0]) | (B * !!count[2]));
-			count = ft_count_helper(count, r, !count[r], !count[r + 1]);
+			ft_count_helper(count, r, !count[r], !count[r + 1]);
 		}
 	}
 }
 
-void	ft_optimize_ops(char *ops)
+void	ft_optimize_ops(t_ps *data, char *ops)
 {
-	int		count[4];
 	char	*prev;
-	char	_do;
 	int		i;
+	char	_do;
 
-	i = 3;
-	while (i >= 0)
-		count[i--] = 0;
 	prev = 0;
+	i = -1;
 	_do = -1;
 	while (!(++_do) || ft_strncmp(ops, prev, !!_do * ft_strlen(ops)))
 	{
@@ -138,13 +136,16 @@ void	ft_optimize_ops(char *ops)
 		prev = ft_strdup(ops);
 		while (ops[++i])
 		{
+			ft_replace_manual_swap(&ops[i], A);
+			ft_replace_manual_swap(&ops[i], B);
 			if (ops[i] & PUSH)
 				ft_clean_push(&ops[i]);
 			if (ops[i] & SWAP)
 				ft_clean_swap(&ops[i]);
 			if (ops[i] & (ROT | REV))
-				ft_clean_rot(&ops[i], count, 0, 0);
+				ft_clean_rot(&ops[i], 0, 4, -2);
 		}
 	}
 	free(prev);
+	ft_too_many_rotations(data, ops);
 }

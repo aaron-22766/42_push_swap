@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 10:05:05 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:57:44 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,22 @@ int		*ft_peek(t_stack *stack, int index);
 void	ft_push(t_stack *stack, int value, int where);
 int		ft_pop(t_stack *stack, int where);
 
-// algorithm.c
+// sort.c
 void	ft_sort(t_ps *data);
 
-// sort_big.c
+// sort_large.c
 void	ft_sort_big(t_ps *data);
+void	ft_sort_radix(t_ps *data);
 
 // operations.c
 void	ft_execute_op(t_ps *data, char op);
 
-// ops_queue.c
-void	ft_optimize_ops(char *ops);
+// optimize.c
+void	ft_optimize_ops(t_ps *data, char *ops);
+
+// ops_clean.c
+void	ft_replace_manual_swap(char *ops, char st);
+void	ft_too_many_rotations(t_ps *data, char *ops);
 
 // utils.c
 int		ft_is_sorted(t_stack *stack);
@@ -91,6 +96,7 @@ void	ft_exit(t_ps *data, int error);
 
 ////////////////////////////////////////////////////////////////////////
 void		print_stack(t_stack *stack);//////REMOVE BEFORE EVAL////////
+void		ft_print_ops(char *ops);////////MAKE STATIC FUNC////////////
 ////////////////////////////////////////////////////////////////////////
 
 #endif
