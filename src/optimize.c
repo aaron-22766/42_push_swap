@@ -12,99 +12,153 @@
 
 #include "push_swap.h"
 
-static void	ft_clean_push(char *ops, int count_a, int count_b)
+static void	ft_clean_push(char *ops)
 {
-	int	i;
-
-	i = count_a;
-	if (count_a > count_b)
-		i = count_b;
-	while (i < count_a)
-		ops[i++] = PUSH | A;
-	while (i < count_b)
-		ops[i++] = PUSH | B;
-}
-
-static void	ft_clean_swaps(char *ops, int count_a, int count_b)
-{
-	if (count_a % 2 && count_b % 2)
-		ops[0] = SWAP | A | B;
-	else if (count_a % 2)
-		ops[0] = SWAP | A;
-	else if (count_b % 2)
-		ops[0] = SWAP | B;
-}
-
-static void	ft_clean_rotate(char *ops, int action, int count_a, int count_b)
-{
-	int	i;
-
-	i = 0;
-	while (i < (count_a * (count_a <= count_b)
-			+ count_b * (count_b < count_a)))
-		ops[i++] = action | A | B;
-	while (i < count_a)
-		ops[i++] = action | A;
-	while (i < count_b)
-		ops[i++] = action | B;
-}
-
-static int	ft_clean_consecutive(char *ops, char action)
-{
-	int	i;
 	int	count_a;
 	int	count_b;
+	int	i;
 
 	count_a = 0;
 	count_b = 0;
 	i = 0;
-	while (ops[i] && !(ops[i] & (SWAP + PUSH + ROT + REV - action)))
+	while ((ops[i] & PUSH) || ops[i] == CLEAR)
 	{
-		if ((ops[i] ^ action) == A)
+		if (ops[i] & A)
 			count_a++;
-		if ((ops[i] ^ action) == B)
+		if (ops[i] & B)
 			count_b++;
-		ops[i] = 64;
+		ops[i++] = CLEAR;
+	}
+	i = -1;
+	while (++i < ((count_a - count_b) * (count_a > count_b)
+			+ (count_b - count_a) * (count_b > count_a)))
+		ops[i] = (PUSH | A) * (count_a > count_b)
+			+ (PUSH | B) * (count_b > count_a);
+}
+
+static void	ft_clean_swap(char *ops)
+{
+	int		count_a;
+	int		count_b;
+	char	vis;
+	int		i;
+
+	count_a = 0;
+	count_b = 0;
+	vis = 0;
+	i = 0;
+	while (ops[i] && !(ops[i] & PUSH) && !(ops[i] & vis))
+	{
+		if ((ops[i] & SWAP) && (ops[i] & A))
+			count_a++;
+		if ((ops[i] & SWAP) && (ops[i] & B))
+			count_b++;
+		if (ops[i] & SWAP)
+			ops[i] = CLEAR;
+		else if (ops[i] != CLEAR)
+			vis |= ops[i];
 		i++;
 	}
-	if (action & PUSH)
-		ft_clean_push(ops, count_a, count_b);
-	else if (action & SWAP)
-		ft_clean_swaps(ops, count_a, count_b);
-	else if ((action & ROT) || (action & REV))
-		ft_clean_rotate(ops, action, count_a, count_b);
-	return (i);
+	if (count_a + count_b && (count_a % 2 + count_b % 2))
+		ops[0] = SWAP | (A * (count_a % 2)) | (B * (count_b % 2));
 }
 
-static int	ft_clean_mixed(char *ops)
+int	*ft_decrement_count(int count[4], int r, int rr)
 {
-	// pb
-	// pb
-	// sa
-	// ra
-	// sb
-	// rra
-	// pa
-	// pa
-	// rra
-	// rra
-	// 1 2 3 4 0:
-	// rra
-	(void)ops;
-	return (0);
+	int	temp[2];
+
+	temp[0] = !count[r];
+	temp[1] = !count[rr];
+	count[0] -= (temp[1] && count[0]);
+	count[1] -= (temp[0] && count[1]);
+	count[2] -= (temp[1] && count[2]);
+	count[3] -= (temp[0] && count[3]);
+	return (count);
 }
 
-void	ft_optimize_ops(t_ps *data)
+static void	ft_recreate_rot(char *ops, int count[4])
 {
 	int	i;
+	int	temp;
+	int	r;
 
+	temp = count[0];
+	count[0] = (count[0] - count[1]) * (count[0] > count[1]);
+	count[1] = (count[1] - temp) * (count[1] > temp);
+	temp = count[2];
+	count[2] = (count[2] - count[3]) * (count[2] > count[3]);
+	count[3] = (count[3] - temp) * (count[3] > temp);
 	i = 0;
-	while (data->ops[i])
+	r = 0;
+	while (r < 3)
 	{
-		i += ft_clean_consecutive(&data->ops[i], PUSH);
-		i += ft_clean_consecutive(&data->ops[i], SWAP);
-		i += ft_clean_consecutive(&data->ops[i], ROT);
-		i += ft_clean_consecutive(&data->ops[i], REV);
-		i += ft_clean_mixed(&data->ops[i]);
+		while (count[r] || count[r + 1])
+		{
+			while (ops[i] != CLEAR)
+				i++;
+			ops[i++] = !count[r] * (REV | (A * !!count[1]) | (B * !!count[3]))
+				+ !count[r + 1] * (ROT | (A * !!count[0]) | (B * !!count[2]));
+			count = ft_decrement_count(count, 0, 1);
+		}
+		r += 2;
 	}
+}
+
+// count[0] -> ra
+// count[1] -> rra
+// count[2] -> rb
+// count[3] -> rrb
+static void	ft_clean_rot(char *ops)
+{
+	char	vis;
+	int		count[4];
+	int		i;
+
+	vis = 0;
+	i = 4;
+	while (i > 0)
+		count[--i] = 0;
+	while (ops[i] && !(ops[i] & PUSH) && !(ops[i] & vis))
+	{
+		if ((ops[i] & ROT) && (ops[i] & A))
+			count[0]++;
+		if ((ops[i] & REV) && (ops[i] & A))
+			count[1]++;
+		if ((ops[i] & ROT) && (ops[i] & B))
+			count[2]++;
+		if ((ops[i] & REV) && (ops[i] & B))
+			count[3]++;
+		if ((REV | ROT) & ops[i])
+			ops[i] = CLEAR;
+		else if (ops[i] != CLEAR)
+			vis |= ops[i];
+		i++;
+	}
+	ft_recreate_rot(ops, count);
+}
+
+void	ft_optimize_ops(char *ops)
+{
+	char	*prev;
+	char	_do;
+	int		i;
+
+	prev = 0;
+	_do = -1;
+	while (!(++_do) || ft_strncmp(ops, prev, !!_do * ft_strlen(ops)))
+	{
+		free(prev);
+		prev = ft_strdup(ops);
+		i = -1;
+		while (ops[++i])
+		{
+			if (ops[i] & PUSH)
+				ft_clean_push(&ops[i]);
+			if (ops[i] & SWAP)
+				ft_clean_swap(&ops[i]);
+			if (ops[i] & (ROT | REV))
+				ft_clean_rot(&ops[i]);
+		}
+	}
+	free(prev);
 }

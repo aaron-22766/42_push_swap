@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 16:41:22 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/25 07:32:02 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define PUSH 8
 # define ROT 16
 # define REV 32
+# define CLEAR 64
 
 # define HEAD 0
 # define TAIL -1
@@ -82,7 +83,7 @@ void	ft_execute_op(t_ps *data, char op);
 void	ft_add_to_stack(t_stack *stack, int value, int where);
 
 // ops_queue.c
-void	ft_optimize_ops(t_ps *data);
+void	ft_optimize_ops(char *ops);
 
 // free.c
 void	ft_free_split(t_ps *data);
