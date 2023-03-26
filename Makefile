@@ -94,15 +94,15 @@ $(TESTER):
 	curl https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl -o $(TESTER)
 
 3: $(NAME) $(TESTER)
-	perl $(TESTER) 3 10
+	perl $(TESTER) 3 100
 
 5: $(NAME) $(TESTER)
-	perl $(TESTER) 5 10000
+	perl $(TESTER) 5 100
 
 100: $(NAME) $(TESTER)
-	perl $(TESTER) 100 10
+	perl $(TESTER) 100 100
 
 500: $(NAME) $(TESTER)
-	perl $(TESTER) 500 10
+	perl $(TESTER) 500 100
 
 .PHONY: all clean fclean libclean re reb

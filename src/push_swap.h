@@ -95,8 +95,8 @@ void	ft_free_split(t_ps *data);
 void	ft_exit(t_ps *data, int error);
 
 ////////////////////////////////////////////////////////////////////////
-void		print_stack(t_stack *stack);//////REMOVE BEFORE EVAL////////
-void		ft_print_ops(char *ops);////////MAKE STATIC FUNC////////////
+void		print_stack(t_stack *stack);//REMOVE BEFORE EVAL (stack.c)//
+void		ft_print_ops(char *ops);//////MAKE STATIC FUNC (push_swap.c)
 ////////////////////////////////////////////////////////////////////////
 
 #endif

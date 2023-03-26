@@ -90,7 +90,7 @@ static void	ft_sort_small(t_ps *data)
 	while (data->b->count)
 	{
 		if (data->b->count > 1 && *ft_peek(data->b, 0) < *ft_peek(data->b, 1))
-			ft_execute_op(data, SWAP | B);
+			ft_execute_op(data, ROT | B);
 		if (*ft_peek(data->a, 0) != *ft_peek(data->b, 0) + 1
 			&& *ft_peek(data->b, 0) != data->a->size - 1)
 			ft_bring_to_top(data, *ft_peek(data->b, 0) + 1);
@@ -114,14 +114,3 @@ void	ft_sort(t_ps *data)
 	else
 		ft_sort_radix(data);
 }
-
-/**
- * better algo!!
- * 
- * 4 1 2 3 0:
- * pb
- * rra
- * pa
- * ra
- * 
- */

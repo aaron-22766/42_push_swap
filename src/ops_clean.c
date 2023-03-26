@@ -12,6 +12,26 @@
 
 #include "push_swap.h"
 
+static void	ft_insert_swap(char *ops, char st, int rev)
+{
+	int	count;
+	int	i;
+
+	count = -1;
+	i = -1;
+	while (ops[++i] && ++count < 3)
+	{
+		while (ops[i] == CLEAR)
+			i++;
+		if (count == 0)
+			ops[i] = rev * (REV | st) + !rev * CLEAR;
+		else if (count == 1)
+			ops[i] = SWAP | st;
+		else if (count == 2)
+			ops[i] = !rev * (ROT | st) + rev * CLEAR;
+	}
+}
+
 void	ft_replace_manual_swap(char *ops, char st)
 {
 	int	rev;
@@ -33,26 +53,10 @@ void	ft_replace_manual_swap(char *ops, char st)
 			count = 10;
 	}
 	if (count == 3)
-	{
-		ops[0] = rev * (REV | st) + !rev * CLEAR;
-		ops[1] = SWAP | st;
-		ops[2] = !rev * (ROT | st) + rev * CLEAR;
-	}
+		ft_insert_swap(ops, st, rev);
 }
 
-void	print_op(char op)
-{
-	if (op & SWAP)
-		ft_printf("s%c\n", 'a' + !!(op & B) + 17 * !!(op & A && op & B));
-	else if (op & PUSH)
-		ft_printf("p%c\n", 'a' + !!(op & B));
-	else if (op & ROT)
-		ft_printf("r%c\n", 'a' + !!(op & B) + 16 * !!(op & A && op & B));
-	else if (op & REV)
-		ft_printf("rr%c\n", 'a' + !!(op & B) + 16 * !!(op & A && op & B));
-}
-
-static void	ft_replace_r(char *ops, char op, int count_a)
+static void	ft_replace_r(char *ops, char op, int count_st)
 {
 	int	count_r;
 	int	i;
@@ -66,13 +70,10 @@ static void	ft_replace_r(char *ops, char op, int count_a)
 		if (ops[i] == op)
 			count_r++;
 	j = 0;
-	while (count_r > count_a / 2 && j != i)
+	while (count_r > count_st / 2 && j != i)
 	{
-		if (count_r != count_a)
-		{
-			count_r++;
-			ops[j++] = op ^ (ROT | REV);
-		}
+		if (count_r != count_st)
+			ops[j++] = op ^ (ROT | REV) + 0 * count_r++;
 		else
 			ops[j++] = CLEAR;
 	}
@@ -90,6 +91,14 @@ void	ft_too_many_rotations(t_ps *data, char *ops)
 		count_a += -(ops[i] == (PUSH | B)) + (ops[i] == (PUSH | A));
 		if ((ops[i] == (PUSH | B)) || (ops[i] == (PUSH | A)))
 			continue ;
+		if ((count_a == 2 && (ops[i] == (ROT | A) || (ops[i] == (REV | A))))
+			|| (data->a->size - count_a == 2
+				&& (ops[i] == (ROT | B) || ops[i] == (REV | B))))
+		{
+			ops[i] = SWAP | ((ops[i] | (ROT | REV)) - (ROT | REV));
+			ft_optimize_ops(data, ops);
+			return ;
+		}
 		ft_replace_r(&ops[i], ROT | A, count_a);
 		ft_replace_r(&ops[i], REV | A, count_a);
 		ft_replace_r(&ops[i], ROT | B, data->a->size - count_a);

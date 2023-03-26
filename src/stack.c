@@ -12,6 +12,27 @@
 
 #include "push_swap.h"
 
+void	print_stack(t_stack *stack)
+{
+	int		i;
+	int		count;
+	char	*padding;
+
+	count = 0;
+	i = 0;
+	while (i < stack->count)
+		count += ft_printf("%d, ", *ft_peek(stack, i++));
+	count = stack->size * 3 - count;
+	padding = ft_calloc(count + 1, sizeof(char));
+	if (!padding)
+		return ;
+	ft_memset(padding, ' ', count);
+	ft_printf("%sh=%d t=%d c=%d s=%d\n", padding, stack->head,
+		stack->tail, stack->count, stack->size);
+	free(padding);
+	// REMOVE BEFORE EVAL
+}
+
 int	*ft_peek(t_stack *st, int i)
 {
 	if (i >= 0 && i < st->count)
