@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 16:57:44 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:50:37 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdbool.h>
 # include "../lib/libft/libft.h"
 
 /* ************************************************************************** */
@@ -88,7 +89,7 @@ void	ft_replace_manual_swap(char *ops, char st);
 void	ft_too_many_rotations(t_ps *data, char *ops);
 
 // utils.c
-int		ft_is_sorted(t_stack *stack);
+bool	ft_is_sorted(t_stack *stack);
 
 // free.c
 void	ft_free_split(t_ps *data);

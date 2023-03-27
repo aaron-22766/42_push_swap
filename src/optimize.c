@@ -128,12 +128,12 @@ void	ft_optimize_ops(t_ps *data, char *ops)
 	char	_do;
 
 	prev = 0;
-	i = -1;
 	_do = -1;
 	while (!(++_do) || ft_strncmp(ops, prev, !!_do * ft_strlen(ops)))
 	{
 		free(prev);
 		prev = ft_strdup(ops);
+		i = -1;
 		while (ops[++i])
 		{
 			ft_replace_manual_swap(&ops[i], A);

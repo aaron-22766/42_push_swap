@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/25 17:39:47 by arabenst         ###   ########.fr        #
+#    Updated: 2023/03/27 15:01:11 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ $(VIS_EXE): $(VIS_DIR)
 
 all: $(NAME)
 
-clean: all
+clean:
 	$(RM) $(RMFLAGS) $(OBJDIR)
 	make -C $(LIBFT_DIR) clean
 
@@ -97,7 +97,7 @@ $(TESTER):
 	perl $(TESTER) 3 100
 
 5: $(NAME) $(TESTER)
-	perl $(TESTER) 5 100
+	perl $(TESTER) 5 1000
 
 100: $(NAME) $(TESTER)
 	perl $(TESTER) 100 100

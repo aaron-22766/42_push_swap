@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 17:19:15 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:45:46 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,13 @@ void	ft_free_split(t_ps *data)
 
 void	ft_exit(t_ps *data, int error)
 {
-	if (data)
-	{
-		ft_free_split(data);
-		free(data->ops);
-		free(data->a->values);
-		free(data->a);
-		free(data->b->values);
-		free(data->b);
-		free(data);
-	}
+	ft_free_split(data);
+	free(data->ops);
+	free(data->a->values);
+	free(data->a);
+	free(data->b->values);
+	free(data->b);
+	free(data);
 	if (error)
 		ft_putendl_fd("Error", STDERR_FILENO);
 	// system("leaks push_swap");

@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:23:09 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 17:18:25 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/27 09:37:39 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ static void	ft_replace_r(char *ops, char op, int count_st)
 
 void	ft_too_many_rotations(t_ps *data, char *ops)
 {
-	int	count_a;
-	int	i;
+	static char	action;
+	int			count_a;
+	int			i;
 
 	count_a = data->a->size;
 	i = -1;
@@ -91,11 +92,11 @@ void	ft_too_many_rotations(t_ps *data, char *ops)
 		count_a += -(ops[i] == (PUSH | B)) + (ops[i] == (PUSH | A));
 		if ((ops[i] == (PUSH | B)) || (ops[i] == (PUSH | A)))
 			continue ;
-		if ((count_a == 2 && (ops[i] == (ROT | A) || (ops[i] == (REV | A))))
-			|| (data->a->size - count_a == 2
-				&& (ops[i] == (ROT | B) || ops[i] == (REV | B))))
+		if (((count_a == 2 && (ops[i] == (SWAP | A) || ops[i] == (ROT | A)))
+				|| (data->a->size - count_a == 2 && (ops[i] == (SWAP | B)
+						|| ops[i] == (ROT | B)))) && (++action <= 2))
 		{
-			ops[i] = SWAP | ((ops[i] | (ROT | REV)) - (ROT | REV));
+			ops[i] = (action * ROT) | ((ops[i] | (SWAP | ROT)) ^ (SWAP | ROT));
 			ft_optimize_ops(data, ops);
 			return ;
 		}

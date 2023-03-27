@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 17:46:21 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:00:51 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	ft_sort_small(t_ps *data)
 	while (data->b->count)
 	{
 		if (data->b->count > 1 && *ft_peek(data->b, 0) < *ft_peek(data->b, 1))
-			ft_execute_op(data, ROT | B);
+			ft_execute_op(data, SWAP | B);
 		if (*ft_peek(data->a, 0) != *ft_peek(data->b, 0) + 1
 			&& *ft_peek(data->b, 0) != data->a->size - 1)
 			ft_bring_to_top(data, *ft_peek(data->b, 0) + 1);
