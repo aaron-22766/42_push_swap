@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/27 14:50:37 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:32:59 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
-# include "../lib/libft/libft.h"
+# include "../libft/libft.h"
 
 /* ************************************************************************** */
 /*                                  DEFINES                                   */
@@ -72,6 +72,7 @@ void	ft_push(t_stack *stack, int value, int where);
 int		ft_pop(t_stack *stack, int where);
 
 // sort.c
+void	ft_sort_three(t_ps *data, char st);
 void	ft_sort(t_ps *data);
 
 // sort_large.c
@@ -90,6 +91,7 @@ void	ft_too_many_rotations(t_ps *data, char *ops);
 
 // utils.c
 bool	ft_is_sorted(t_stack *stack);
+void	ft_bring_to_top(t_ps *data, char st, int n);
 
 // free.c
 void	ft_free_split(t_ps *data);
