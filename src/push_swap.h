@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/27 17:32:59 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:32:57 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@
 
 typedef struct s_stack
 {
-	int	*values;
-	int	head;
-	int	tail;
-	int	count;
-	int	size;
+	char	st;
+	int		*values;
+	int		head;
+	int		tail;
+	int		count;
+	int		size;
 }	t_stack;
 
 typedef struct s_ps
@@ -57,6 +58,7 @@ typedef struct s_ps
 	t_stack	*b;
 	char	*ops;
 	char	**split;
+	t_stack	**chunks;
 }	t_ps;
 
 /* ************************************************************************** */
@@ -67,16 +69,20 @@ typedef struct s_ps
 void	ft_get_input(t_ps *data, int argc, char **argv);
 
 // stack.c
+t_stack	*ft_init_stack(t_ps *data, char st);
 int		*ft_peek(t_stack *stack, int index);
 void	ft_push(t_stack *stack, int value, int where);
 int		ft_pop(t_stack *stack, int where);
+void	ft_print_stack(t_stack *stack);
 
 // sort.c
-void	ft_sort_three(t_ps *data, char st);
+void	ft_sort_three(t_ps *data, t_stack *stack);
 void	ft_sort(t_ps *data);
 
-// sort_large.c
-void	ft_sort_big(t_ps *data);
+// sort_quick.c
+void	ft_sort_quick(t_ps *data);
+
+// sort_radix.c
 void	ft_sort_radix(t_ps *data);
 
 // operations.c
@@ -91,15 +97,12 @@ void	ft_too_many_rotations(t_ps *data, char *ops);
 
 // utils.c
 bool	ft_is_sorted(t_stack *stack);
+bool	ft_is_in_order(t_stack *stack);
 void	ft_bring_to_top(t_ps *data, char st, int n);
 
 // free.c
 void	ft_free_split(t_ps *data);
+void	ft_free_stack(t_stack *stack);
 void	ft_exit(t_ps *data, int error);
-
-////////////////////////////////////////////////////////////////////////
-void		print_stack(t_stack *stack);//REMOVE BEFORE EVAL (stack.c)//
-void		ft_print_ops(char *ops);//////MAKE STATIC FUNC (push_swap.c)
-////////////////////////////////////////////////////////////////////////
 
 #endif

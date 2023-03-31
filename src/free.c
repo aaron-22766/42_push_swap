@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:35:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/27 15:22:40 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:53:03 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,25 @@ void	ft_free_split(t_ps *data)
 	data->split = 0;
 }
 
+void	ft_free_stack(t_stack *stack)
+{
+	if (stack)
+		free(stack->values);
+	free(stack);
+}
+
 void	ft_exit(t_ps *data, int error)
 {
+	int	i;
+
+	i = -1;
+	while (data->chunks && ++i < ft_log2_int(data->a->size))
+		ft_free_stack(data->chunks[i]);
+	free(data->chunks);
 	ft_free_split(data);
 	free(data->ops);
-	free(data->a->values);
-	free(data->a);
-	free(data->b->values);
-	free(data->b);
+	ft_free_stack(data->a);
+	ft_free_stack(data->b);
 	free(data);
 	if (error)
 		ft_putendl_fd("Error", STDERR_FILENO);

@@ -6,31 +6,26 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:40:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/25 10:05:53 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:23:49 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_stack(t_stack *stack)
+t_stack	*ft_init_stack(t_ps *data, char st)
 {
-	int		i;
-	int		count;
-	char	*padding;
+	t_stack	*stack;
 
-	count = 0;
-	i = 0;
-	while (i < stack->count)
-		count += ft_printf("%d, ", *ft_peek(stack, i++));
-	count = stack->size * 3 - count;
-	padding = ft_calloc(count + 1, sizeof(char));
-	if (!padding)
-		return ;
-	ft_memset(padding, ' ', count);
-	ft_printf("%sh=%d t=%d c=%d s=%d\n", padding, stack->head,
-		stack->tail, stack->count, stack->size);
-	free(padding);
-	// REMOVE BEFORE EVAL
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		ft_exit(data, 1);
+	stack->st = st;
+	stack->values = NULL;
+	stack->head = HEAD;
+	stack->tail = TAIL;
+	stack->count = 0;
+	stack->size = 0;
+	return (stack);
 }
 
 int	*ft_peek(t_stack *st, int i)
@@ -59,19 +54,32 @@ void	ft_push(t_stack *stack, int value, int where)
 
 int	ft_pop(t_stack *stack, int where)
 {
-	int	result;
+	int	*result;
 
-	result = -1;
+	result = ft_peek(stack, where);
+	if (!result)
+		return (-1);
 	stack->count--;
 	if (where == HEAD)
-	{
-		result = stack->values[stack->head];
 		stack->head = (stack->head + 1) % stack->size;
-	}
 	else if (where == TAIL)
-	{
-		result = stack->values[stack->tail];
 		stack->tail = (stack->tail + stack->size - 1) % stack->size;
+	return (*result);
+}
+
+// only for debugging purposes
+void	ft_print_stack(t_stack *stack)
+{
+	int	i;
+
+	i = -1;
+	while (++i < stack->size)
+	{
+		if (ft_peek(stack, i))
+			ft_printf("%d, ", *ft_peek(stack, i));
+		else
+			ft_printf("-, ");
 	}
-	return (result);
+	ft_printf("\n|%c| h=%d, t=%d, c=%d, s=%d\n", 'A' + stack->st - 1,
+		stack->head, stack->tail, stack->count, stack->size);
 }

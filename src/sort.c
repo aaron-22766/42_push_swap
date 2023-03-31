@@ -6,30 +6,25 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/27 17:09:15 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:32:03 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_sort_three(t_ps *data, char st)
+void	ft_sort_three(t_ps *data, t_stack *stack)
 {
-	t_stack	*stack;
-
-	stack = data->a;
-	if (st == B)
-		stack = data->b;
-	if (ft_is_sorted(stack))
+	if (ft_is_in_order(stack))
 		return ;
 	if (*ft_peek(stack, 0) > *ft_peek(stack, 2)
 		&& *ft_peek(stack, 0) > *ft_peek(stack, 1))
-		ft_execute_op(data, ROT | st);
+		ft_execute_op(data, ROT | stack->st);
 	else if (*ft_peek(stack, 0) > *ft_peek(stack, 2)
 		&& *ft_peek(stack, 0) < *ft_peek(stack, 1))
-		ft_execute_op(data, REV | st);
+		ft_execute_op(data, REV | stack->st);
 	else
-		ft_execute_op(data, SWAP | st);
-	ft_sort_three(data, st);
+		ft_execute_op(data, SWAP | stack->st);
+	ft_sort_three(data, stack);
 }
 
 static int	ft_only_one_unsorted(t_stack *stack)
@@ -75,7 +70,7 @@ static void	ft_sort_small(t_ps *data)
 	}
 	while (data->a->count > 3)
 		ft_execute_op(data, PUSH | B);
-	ft_sort_three(data, A);
+	ft_sort_three(data, data->a);
 	while (data->b->count)
 	{
 		if (data->b->count > 1 && *ft_peek(data->b, 0) < *ft_peek(data->b, 1))
@@ -86,18 +81,40 @@ static void	ft_sort_small(t_ps *data)
 	ft_bring_to_top(data, A, 0);
 }
 
+static void	ft_sort_radix_base2(t_ps *data)
+{
+	int	i;
+	int	bit;
+
+	bit = 0;
+	while (!ft_is_sorted(data->a))
+	{
+		i = -1;
+		while (++i < data->a->size)
+		{
+			if ((*ft_peek(data->a, 0) >> bit) & 1)
+				ft_execute_op(data, ROT | A);
+			else
+				ft_execute_op(data, PUSH | B);
+		}
+		while (data->b->count)
+			ft_execute_op(data, PUSH | A);
+		bit++;
+	}
+}
+
 void	ft_sort(t_ps *data)
 {
 	if (ft_is_sorted(data->a))
 		ft_exit(data, 0);
 	if (data->a->count == 2)
 		ft_execute_op(data, SWAP | A);
-	else if (data->a->count == 3)
-		ft_sort_three(data, A);
+	else if (data->a->count <= 3)
+		ft_sort_three(data, data->a);
 	else if (data->a->count <= 5)
 		ft_sort_small(data);
 	else if (data->a->count <= 500)
-		ft_sort_radix(data);
+		ft_sort_radix_base2(data);
 	else
-		ft_sort_radix(data);
+		ft_sort_radix_base2(data);
 }

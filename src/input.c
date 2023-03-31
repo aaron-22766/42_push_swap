@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/22 13:28:32 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:43:07 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	ft_get_input(t_ps *data, int argc, char **argv)
 	int	j;
 
 	ft_count_input(data, argc, argv);
-	data->a->values = malloc(sizeof(int) * data->a->size);
-	data->b->values = malloc(sizeof(int) * data->b->size);
+	data->a->values = malloc(data->a->size * sizeof(int));
+	data->b->values = malloc(data->b->size * sizeof(int));
 	if (!data->a->values || !data->b->values)
 		ft_exit(data, 1);
 	i = 0;

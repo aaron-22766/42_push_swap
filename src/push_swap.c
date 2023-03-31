@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/27 17:09:45 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:31:29 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,21 @@ static t_ps	*ft_init_data(void)
 	data = malloc(sizeof(t_ps));
 	if (!data)
 		ft_exit(data, 1);
-	data->a = malloc(sizeof(t_stack));
-	data->b = malloc(sizeof(t_stack));
-	if (!data->a || !data->b)
-		ft_exit(data, 1);
-	data->a->values = NULL;
-	data->a->head = HEAD;
-	data->a->tail = TAIL;
-	data->a->count = 0;
-	data->a->size = 0;
-	data->b->values = NULL;
-	data->b->head = HEAD;
-	data->b->tail = TAIL;
-	data->b->count = 0;
-	data->b->size = 0;
+	data->a = ft_init_stack(data, A);
+	data->b = ft_init_stack(data, B);
 	data->ops = NULL;
 	data->split = NULL;
+	data->chunks = NULL;
 	return (data);
 }
 
-void	ft_print_ops(char *ops)
+static void	ft_print_ops(char *ops)
 {
 	int		i;
 	char	op;
 
 	i = -1;
-	while (ops[++i])
+	while (ops && ops[++i])
 	{
 		op = ops[i];
 		if (op & SWAP)
