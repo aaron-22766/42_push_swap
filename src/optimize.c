@@ -71,7 +71,6 @@ int	*ft_count_helper(int count[4], int r, int temp0, int temp1)
 		count[1] += ((r & REV) && (r & A));
 		count[2] += ((r & ROT) && (r & B));
 		count[3] += ((r & REV) && (r & B));
-		return (count);
 	}
 	else if (r == -1)
 	{
@@ -79,12 +78,14 @@ int	*ft_count_helper(int count[4], int r, int temp0, int temp1)
 		count[1] = (count[1] - temp0) * (count[1] > temp0);
 		count[2] = (count[2] - count[3]) * (count[2] > count[3]);
 		count[3] = (count[3] - temp1) * (count[3] > temp1);
-		return (count);
 	}
-	count[0] -= (temp1 && count[0]);
-	count[1] -= (temp0 && count[1]);
-	count[2] -= (temp1 && count[2]);
-	count[3] -= (temp0 && count[3]);
+	else
+	{
+		count[0] -= (temp1 && count[0]);
+		count[1] -= (temp0 && count[1]);
+		count[2] -= (temp1 && count[2]);
+		count[3] -= (temp0 && count[3]);
+	}
 	return (count);
 }
 

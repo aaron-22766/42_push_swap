@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/31 11:32:03 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/03 21:13:25 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,10 @@ void	ft_sort(t_ps *data)
 		ft_exit(data, 0);
 	if (data->a->count == 2)
 		ft_execute_op(data, SWAP | A);
-	else if (data->a->count <= 3)
+	else if (data->a->count == 3)
 		ft_sort_three(data, data->a);
 	else if (data->a->count <= 5)
 		ft_sort_small(data);
-	else if (data->a->count <= 500)
-		ft_sort_radix_base2(data);
 	else
 		ft_sort_radix_base2(data);
 }
