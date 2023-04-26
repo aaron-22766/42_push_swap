@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/03/27 17:28:06 by arabenst         ###   ########.fr        #
+#    Updated: 2023/04/26 11:56:38 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,10 +93,10 @@ $(TESTER):
 	perl $(TESTER) 3 100
 
 5: $(NAME) $(TESTER)
-	perl $(TESTER) 5 1000
+	perl $(TESTER) 5 100
 
 100: $(NAME) $(TESTER)
-	perl $(TESTER) 100 100
+	perl $(TESTER) 100 1000
 
 500: $(NAME) $(TESTER)
 	perl $(TESTER) 500 100

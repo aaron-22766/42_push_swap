@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:40:32 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/30 12:23:49 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/22 15:16:38 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_stack	*ft_init_stack(t_ps *data, char st)
 
 	stack = malloc(sizeof(t_stack));
 	if (!stack)
-		ft_exit(data, 1);
+		ft_exit(data, true);
 	stack->st = st;
 	stack->values = NULL;
 	stack->head = HEAD;

@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:58:37 by arabenst          #+#    #+#             */
-/*   Updated: 2023/04/03 21:13:16 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/22 15:15:27 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_queue_op(t_ps *data, char op)
 			size += 1024;
 		temp = ft_calloc(size + 1, sizeof(char));
 		if (!temp)
-			ft_exit(data, 1);
+			ft_exit(data, true);
 		if (data->ops)
 			ft_strlcpy(temp, data->ops, size + 1);
 		free(data->ops);

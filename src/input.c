@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:55:55 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/29 11:43:07 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/22 15:15:14 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_count_input(t_ps *data, int argc, char **argv)
 				data->a->size++;
 		}
 		if (empty)
-			ft_exit(data, 1);
+			ft_exit(data, true);
 		data->a->size++;
 	}
 	data->b->size = data->a->size;
@@ -55,18 +55,18 @@ static void	ft_check_valid_number(t_ps *data, char *str)
 	while (str[++i])
 	{
 		if (!ft_strchr("0123456789-+ ", str[i]))
-			ft_exit(data, 1);
+			ft_exit(data, true);
 		if (ft_strchr("-+", str[i]) && (!ft_strchr("0123456789", str[i + 1])
 				|| (i > 0 && str[i - 1] != ' ')))
-			ft_exit(data, 1);
+			ft_exit(data, true);
 	}
 	num = ft_atoi(str);
 	if (i - first_non_zero > 9 && (num == -1 || num == 0))
-		ft_exit(data, 1);
+		ft_exit(data, true);
 	i = -1;
 	while (++i < data->a->count)
 		if (data->b->values[i] == num)
-			ft_exit(data, 1);
+			ft_exit(data, true);
 }
 
 static void	ft_convert_to_order(t_stack *a, t_stack *b)
@@ -106,7 +106,7 @@ void	ft_get_input(t_ps *data, int argc, char **argv)
 	data->a->values = malloc(data->a->size * sizeof(int));
 	data->b->values = malloc(data->b->size * sizeof(int));
 	if (!data->a->values || !data->b->values)
-		ft_exit(data, 1);
+		ft_exit(data, true);
 	i = 0;
 	while (++i < argc)
 	{
@@ -120,6 +120,6 @@ void	ft_get_input(t_ps *data, int argc, char **argv)
 		ft_free_split(data);
 	}
 	if (data->a->size < 2)
-		ft_exit(data, 0);
+		ft_exit(data, false);
 	ft_convert_to_order(data->a, data->b);
 }

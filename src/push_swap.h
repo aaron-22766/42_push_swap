@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/31 11:32:57 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:58:55 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_ps
 	t_stack	*b;
 	char	*ops;
 	char	**split;
-	t_stack	**chunks;
+	int		chunk_amount;
 }	t_ps;
 
 /* ************************************************************************** */
@@ -76,14 +76,13 @@ int		ft_pop(t_stack *stack, int where);
 void	ft_print_stack(t_stack *stack);
 
 // sort.c
-void	ft_sort_three(t_ps *data, t_stack *stack);
 void	ft_sort(t_ps *data);
 
-// sort_quick.c
-void	ft_sort_quick(t_ps *data);
+// presort.c
+void	ft_presort(t_ps *data);
 
-// sort_radix.c
-void	ft_sort_radix(t_ps *data);
+// smart_insert.c
+void	ft_smart_insert(t_ps *data);
 
 // operations.c
 void	ft_execute_op(t_ps *data, char op);
@@ -97,12 +96,11 @@ void	ft_too_many_rotations(t_ps *data, char *ops);
 
 // utils.c
 bool	ft_is_sorted(t_stack *stack);
-bool	ft_is_in_order(t_stack *stack);
 void	ft_bring_to_top(t_ps *data, char st, int n);
 
 // free.c
 void	ft_free_split(t_ps *data);
 void	ft_free_stack(t_stack *stack);
-void	ft_exit(t_ps *data, int error);
+void	ft_exit(t_ps *data, bool error);
 
 #endif

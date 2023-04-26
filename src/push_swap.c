@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:14:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/03/31 11:31:29 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:04:44 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ static t_ps	*ft_init_data(void)
 
 	data = malloc(sizeof(t_ps));
 	if (!data)
-		ft_exit(data, 1);
+		ft_exit(data, true);
 	data->a = ft_init_stack(data, A);
 	data->b = ft_init_stack(data, B);
 	data->ops = NULL;
 	data->split = NULL;
-	data->chunks = NULL;
 	return (data);
 }
 
@@ -58,5 +57,5 @@ int	main(int argc, char **argv)
 	ft_sort(data);
 	ft_optimize_ops(data, data->ops);
 	ft_print_ops(data->ops);
-	ft_exit(data, 0);
+	ft_exit(data, false);
 }
