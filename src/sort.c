@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:34:17 by arabenst          #+#    #+#             */
-/*   Updated: 2023/04/26 12:37:57 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:49:02 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	ft_sort_small(t_ps *data)
 		ft_execute_op(data, PUSH | B);
 		ft_bring_to_top(data, A, (only + 1) % data->a->size);
 		ft_execute_op(data, PUSH | A);
-		ft_bring_to_top(data, A, 0);
 		return ;
 	}
 	while (data->a->count > 3)
