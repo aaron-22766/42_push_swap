@@ -1,10 +1,6 @@
-libft/
-obj/
-visualizer/
-.push_swap*
-imgui.ini
-ps_tester.pl
-push_swap
-checker
-tests/test
-tests/obj
+*
+!src/
+!.gitignore
+!checker
+!Makefile
+!run.sh
