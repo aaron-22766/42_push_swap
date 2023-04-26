@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 10:15:35 by arabenst          #+#    #+#             */
-/*   Updated: 2023/04/26 11:58:55 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:53:28 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	ft_print_stack(t_stack *stack);
 
 // sort.c
 void	ft_sort(t_ps *data);
-
-// presort.c
-void	ft_presort(t_ps *data);
 
 // smart_insert.c
 void	ft_smart_insert(t_ps *data);

@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/04/26 11:56:38 by arabenst         ###   ########.fr        #
+#    Updated: 2023/04/26 12:54:36 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,18 @@ NAME		=	push_swap
 SRCDIR		=	./src
 OBJDIR		=	./obj
 
-SRCS		=	$(wildcard $(SRCDIR)/*.c)
+SRCS		=	push_swap.c \
+				input.c \
+				stack.c \
+				sort.c \
+				smart_insert.c \
+				operations.c \
+				optimize.c \
+				ops_clean.c \
+				utils.c \
+				free.c
+SRCS		:=	$(addprefix $(SRCDIR)/,$(SRCS))
 OBJS		=	$(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o)))
-
-# **************************************************************************** #
-#                               CHANGE WILDCARD                                #
-# **************************************************************************** #
 
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
@@ -28,25 +34,23 @@ CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm
 RMFLAGS		=	-rf
 
+LIBFT_GIT	=	https://github.com/aaron-22766/libft.git
 LIBFT_DIR	=	./libft
 LIBFT_LIB	=	libft.a
 LIBFT		=	$(LIBFT_DIR)/$(LIBFT_LIB)
 
-ARCS		=	$(LIBFT)
-
-CHECK_LIB	=	-lcheck -L $(HOME)/.brew/opt/check/lib/
-CHECK_INC	=	-I $(HOME)/.brew/opt/check/include/
-
+VIS_GIT		=	https://github.com/o-reo/push_swap_visualizer.git
 VIS_DIR		=	./visualizer
 VIS_EXE		=	$(VIS_DIR)/build/bin/visualizer
 
+TESTER_GET	=	https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl
 TESTER		=	./ps_tester.pl
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(ARCS)
+	$(CC) -o $(NAME) $(OBJS) $(LIBFT)
 
 $(LIBFT):
-	git clone https://github.com/aaron-22766/libft.git $(LIBFT_DIR); make -C $(LIBFT_DIR)
+	git clone $(LIBFT_GIT) $(LIBFT_DIR); make -C $(LIBFT_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) -c $(CFLAGS) $< -o $@
@@ -55,7 +59,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(VIS_DIR):
-	git clone https://github.com/o-reo/push_swap_visualizer.git $(VIS_DIR); (cd $(VIS_DIR) && mkdir build)
+	git clone $(VIS_GIT) $(VIS_DIR); (cd $(VIS_DIR) && mkdir build)
 
 $(VIS_EXE): $(VIS_DIR)
 	(cd $(VIS_DIR)/build && cmake .. && make)
@@ -87,7 +91,7 @@ visclean:
 	$(RM) $(RMFLAGS) $(VIS_DIR)
 
 $(TESTER):
-	curl https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl -o $(TESTER)
+	curl $(TESTER_GET) -o $(TESTER)
 
 3: $(NAME) $(TESTER)
 	perl $(TESTER) 3 100
@@ -96,7 +100,7 @@ $(TESTER):
 	perl $(TESTER) 5 100
 
 100: $(NAME) $(TESTER)
-	perl $(TESTER) 100 1000
+	perl $(TESTER) 100 100
 
 500: $(NAME) $(TESTER)
 	perl $(TESTER) 500 100
