@@ -6,7 +6,7 @@
 #    By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/14 17:40:26 by arabenst          #+#    #+#              #
-#    Updated: 2023/04/26 12:54:36 by arabenst         ###   ########.fr        #
+#    Updated: 2023/04/28 12:38:42 by arabenst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,7 @@ NAME		=	push_swap
 SRCDIR		=	./src
 OBJDIR		=	./obj
 
-SRCS		=	push_swap.c \
-				input.c \
-				stack.c \
-				sort.c \
-				smart_insert.c \
-				operations.c \
-				optimize.c \
-				ops_clean.c \
-				utils.c \
-				free.c
-SRCS		:=	$(addprefix $(SRCDIR)/,$(SRCS))
+SRCS		=	$(wildcard $(SRCDIR)/*.c)
 OBJS		=	$(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o)))
 
 CC			=	gcc
