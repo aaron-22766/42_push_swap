@@ -128,7 +128,7 @@ One thing that I developed while working on the large algoritm was a bitmap for 
 
 This made it possible to just bitwise-or the instructions together to form the different operations (`rrr` = `REV | A | B`).
 
-Since it was now possible to store an operation in just a `char`, I thought it would be cool to queue the operations while running the algorithm instead of actually printing them to the output immedately. So I implemented a lot of functions to detect and replace/delete unnecessary operations, those include:
+Since it was now possible to store an operation in just a char, I thought it would be cool to queue the operations while running the algorithm instead of actually printing them to the output immedately. So I implemented a lot of functions to detect and replace/delete unnecessary operations, those include:
 
 * push, rotate and push back would be replaced by a simple swap (`pb` - `ra` - `pa` → `sa`)
 * mixed push operations following immediately after each other can be deleted (`pb` - `pa` - `pb` → `pb`)
