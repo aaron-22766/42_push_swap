@@ -49,11 +49,12 @@ ra
 
 ## 💬 Description
 
+Program
 * You have two stacks named a and b
 * Upon launch, the input numbers are all in stack a in the same order as given from the command line
 * The program must display the smallest stack of instructions possible to sort the stack a, the smallest number being at the top
 
-Numbers:
+Input numbers:
 * must be a valid `int`egers
 * can be given as just one argument or split up into multiple arguments
 * cannot have duplicates
