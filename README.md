@@ -54,11 +54,10 @@ Program
 * Upon launch, the input numbers are all in stack a in the same order as given from the command line
 * The program must display the smallest stack of instructions possible to sort the stack a, the smallest number being at the top
 
-Input numbers:
+Input numbers must follow these rules, otherwise the program just returns an Error:
 * must be a valid `int`egers
 * can be given as just one argument or split up into multiple arguments
 * cannot have duplicates
-otherwise the program returns an Error
 
 Operations:
 - `sa` (swap a): Swap the first 2 elements at the top of stack a
