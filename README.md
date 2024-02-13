@@ -29,10 +29,10 @@ https://youtu.be/nN0gt9Yrt04
 Number of operations my algorithm produces out of 1000 randomized tests:
 | INPUT SIZE | MIN  | MAX  | AVERAGE | REQUIREMENTS         |
 |------------|------|------|---------|----------------------|
-| 3          | 1    | 2    | 1.34    | <= 3                 |
-| 5          | 1    | 9    | 6.55    | <= 12                |
-| 100        | 495  | 616  | 560     | <= 700 for 5 points  |
-| 500        | 3663 | 4277 | 3971    | <= 5500 for 5 points |
+| 3          | 1    | 2    | 1.34    | ≤ 3                 |
+| 5          | 1    | 9    | 6.55    | ≤ 12                |
+| 100        | 495  | 616  | 560     | ≤ 700 for 5 points  |
+| 500        | 3663 | 4277 | 3971    | ≤ 5500 for 5 points |
 
 ## 🛠 Usage
 
