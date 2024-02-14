@@ -96,11 +96,11 @@ A "peek" function makes it possible to retrieve the pointer to an element in the
 
 ### Algorithm
 
-Because of the requirement to optimize for 3, 5, 100 and 500 input numbers, I decided to implement simple algorithms for 3 and 5 numbers and one more complex algorithms for bigger amounts. First, I check if stack `a` is already sorted, if it is, the program just exits. Then, if there are only 2 numbers on the stack, they are swapped and then the stack is sorted. Otherwise I run the different algorithms.
+Because of the requirement to optimize for 3, 5, 100 and 500 input numbers, I decided to implement simple algorithms for 3 and 5 numbers and one more complex algorithm for bigger amounts. First, I check if stack `a` is already sorted, if it is, the program just exits. Then, if there are only 2 numbers on the stack, they are swapped and then the stack is sorted. Otherwise I run the different algorithms.
 
 #### Sorting 3 numbers
 
-This one is really simple. It just compares the 3 numbers and either rotates, reverse rotates or swaps the stack. It's a reqursive function for simplicity sake but at most it needs 2 operations to sort it. It only takes into account the first 3 numbers because I use this function for sorting 5 numberss as well.
+This one is really simple. It just compares the 3 numbers and either rotates, reverse rotates or swaps the stack. It's a recursive function for simplicity sake but at most it needs 2 operations to sort it. It only takes into account the first 3 numbers because I use this function for sorting 5 numbers as well.
 
 #### Sorting up to 5 numbers
 
@@ -126,7 +126,7 @@ One thing that I developed while working on the large algoritm was a bitmap for 
 
 This made it possible to just bitwise-or the instructions together to form the different operations (`rrr` = `REV | A | B`).
 
-Since it was now possible to store an operation in just a char, I thought it would be cool to queue the operations while running the algorithm instead of actually printing them to the output immedately. So I implemented a lot of functions to detect and replace/delete unnecessary operations, those include:
+Since it was now possible to store an operation in just 1 byte, I thought it would be cool to queue the operations while running the algorithm instead of actually printing them to the output immedately. So I implemented a lot of functions to detect and replace/delete unnecessary operations, those include:
 
 * push, rotate and push back would be replaced by a simple swap (`pb` - `ra` - `pa` → `sa`)
 * mixed push operations following immediately after each other can be deleted (`pb` - `pa` - `pb` → `pb`)
