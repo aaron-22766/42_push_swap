@@ -137,3 +137,19 @@ Since it was now possible to store an operation in just 1 byte, I thought it wou
 * individual rotations on both stacks are combined (`ra` - `rb` → `rr`)
 
 These get repeated until the queue has reached the lowest number of operations. I had to be very careful about the implementation as a wrong code would basically unsort my stack again, but I got it to work. The optimizations brought down the average number of operations by up to **15% !!!**
+
+## ⚡️ Testing
+
+To run the visualizer (Mac only):
+```shell
+$> make vis
+```
+
+To run a tester script for multiple tests:
+```shell
+$> make 3
+$> make 5
+$> make 100
+$> make 500
+$> perl ps_tester.pl [amount of random numbers] [number of tests]
+```
