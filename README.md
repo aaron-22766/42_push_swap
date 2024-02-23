@@ -22,7 +22,7 @@
 
 This project will make you sort data on a stack, with a limited set of instructions, using the lowest possible number of actions. To succeed you’ll have to manipulate various types of algorithms and choose the most appropriate solution (out of many) for an optimized data sorting.
 
-![play demo](https://github.com/aaron-22766/bin/blob/ad6211b063e040868fdcba9a40f7e4f7fdf4e42f/gifs/push%20swap%20500.gif)
+[![Play Demo](https://github.com/aaron-22766/aaron-22766/blob/main/bin/gifs/push%20swap%20500.gif)](https://www.youtube.com/watch?v=nN0gt9Yrt04)
 
 Number of operations my algorithm produces out of 1000 randomized tests:
 | INPUT SIZE | MIN  | MAX  | AVERAGE | REQUIREMENTS         |
